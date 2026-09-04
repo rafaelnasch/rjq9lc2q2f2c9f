@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!--
+  RENDERING CONTRACT: placeholders `{{KEY}}` recebem dados JÁ escapados (html.escape / Jinja2 autoescape).
+  `{{KEY_HTML}}` aceita HTML sanitizado (DOMPurify/bleach).
+-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com data:; script-src 'self' 'unsafe-inline';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F1F4F8">
+<meta name="growai-report-template" content="v6-retention">
+<title>Pesquisa de Mercado &amp; VOC — Ana Costa — GrowAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════ GROWAI REPORT DESIGN SYSTEM v6 · Retention / Liquid Glass ═══════════ */
+  :root{
+    --bg:#F1F4F8; --surface:#FFFFFF; --bg-soft:#F6F8FA; --ink:#0C0F14; --ink-2:#3A4150; --muted:#5B6472; --faint:#67717F;
+    --line:#E7EAF0; --line-2:#EEF1F5; --accent:#FF6A1A; --accent-2:#FF9A3D; --accent-deep:#C8470C; --accent-ink:#B33E0A; --accent-soft:#FFF1E8;
+    --green:#0E9F6E; --green-soft:#E9F8F1; --red:#C0392B; --red-soft:#FBEAE8;
+    --amber:#B7791F; --amber-soft:#FBF4E6; --deep:#0C0F14;
+    --glass:rgba(255,255,255,.66); --glass-line:rgba(255,255,255,.78);
+    --r:18px; --r-sm:12px;
+    --shadow:0 1px 2px rgba(12,15,20,.04), 0 18px 50px rgba(12,15,20,.10);
+    --shadow-sm:0 1px 2px rgba(12,15,20,.04), 0 8px 22px rgba(12,15,20,.06);
+    --shadow-lift:0 4px 8px rgba(12,15,20,.06), 0 26px 60px rgba(12,15,20,.13);
+    --display:'Satoshi','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;
+    --mono:'SF Mono','JetBrains Mono','Fira Code','Consolas',monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { overflow-x:hidden; max-width:100%; }
+  body {
+    font-family:var(--sans); background:var(--bg); color:var(--ink);
+    font-size:16px; line-height:1.62; letter-spacing:-0.011em;
+    min-height:100vh; display:flex; justify-content:center;
+    padding:52px 22px 110px; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    position:relative;
+  }
+  /* GLOW AMBIENTE (fundo, sutil — dá profundidade e faz o glass refratar) */
+  body::before { content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:
+      radial-gradient(48% 38% at 82% -4%, rgba(255,106,26,.13), transparent 72%),
+      radial-gradient(42% 40% at 8% 102%, rgba(255,154,61,.11), transparent 72%),
+      radial-gradient(38% 34% at 60% 48%, rgba(230,60,10,.05), transparent 70%); }
+  .container { max-width:880px; width:100%; position:relative; z-index:1; }
+
+  /* superfície de vidro reutilizada conceitualmente nas classes abaixo */
+  .logo-wrap { display:flex; align-items:center; gap:12px; margin-bottom:28px; }
+  .logo-mark { height:38px; width:38px; flex-shrink:0; border-radius:50%; box-shadow:0 6px 18px rgba(255,106,26,.32); }
+  .logo-word { font-family:var(--display); font-weight:700; font-size:21px; letter-spacing:-0.025em; color:var(--ink); }
+
+  /* === HEADER === */
+  .page-title { font-family:var(--display); font-size:clamp(30px,4.8vw,46px); font-weight:600; line-height:1.05; letter-spacing:-0.04em; color:var(--ink); margin:4px 0 14px; }
+  .page-subtitle { font-size:17px; color:var(--muted); font-weight:400; line-height:1.55; margin-bottom:36px; max-width:66ch; letter-spacing:-0.012em; }
+
+  /* === META BAR (grid glass — corrige valor longo) === */
+  .meta-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px; margin-bottom:56px;
+    background:linear-gradient(var(--line),var(--line)); border:1px solid var(--glass-line); border-radius:var(--r-sm); overflow:hidden;
+    box-shadow:var(--shadow-sm); }
+  .meta-bar > div { background:var(--glass); -webkit-backdrop-filter:blur(18px) saturate(150%); backdrop-filter:blur(18px) saturate(150%); padding:18px 22px; line-height:1.45; font-size:15px; color:var(--ink); }
+  .meta-bar strong { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; color:var(--faint); font-weight:600; }
+
+  /* === TOC (lista limpa) === */
+  .toc { margin-bottom:64px; }
+  .toc-title { font-size:11px; font-weight:600; color:var(--faint); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:18px; }
+  .toc ol { list-style:none; margin:0; padding:0; counter-reset:toc-counter; border-top:1px solid var(--line); }
+  .toc li { counter-increment:toc-counter; font-size:17px; line-height:1.4; display:flex; gap:18px; align-items:center; padding:16px 4px; border-bottom:1px solid var(--line); transition:padding-left .25s ease,background .25s ease; border-radius:10px; }
+  .toc li:hover { padding-left:14px; background:rgba(255,106,26,.05); }
+  .toc li::before { content:counter(toc-counter,decimal-leading-zero); color:var(--accent-ink); font-variant-numeric:tabular-nums; font-size:13px; font-weight:600; min-width:22px; }
+  .toc a { color:var(--ink); text-decoration:none; flex:1; }
+  .toc li:hover a { color:var(--accent-ink); }
+
+  /* === SECTIONS === */
+  .section { margin-bottom:56px; }
+  .section-label { font-family:var(--sans); font-size:12px; font-weight:600; color:var(--ink); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:20px; border:0; display:flex; align-items:center; gap:12px; }
+  .section-label::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),transparent); }
+  .section-label .num { color:var(--accent-ink); font-variant-numeric:tabular-nums; font-weight:600; }
+
+  .subsection { margin-bottom:40px; }
+  .subsection-title { font-family:var(--display); font-size:27px; font-weight:600; color:var(--ink); margin-bottom:16px; letter-spacing:-0.03em; line-height:1.12; }
+
+  /* === TYPOGRAPHY === */
+  p { font-size:16px; color:var(--ink-2); line-height:1.65; margin-bottom:14px; letter-spacing:-0.011em; }
+  p strong { color:var(--ink); font-weight:600; }
+  ul, ol { margin:6px 0 18px 20px; color:var(--ink-2); font-size:15.5px; line-height:1.65; }
+  li { margin-bottom:9px; padding-left:3px; } li::marker { color:var(--faint); } li strong { color:var(--ink); font-weight:600; }
+  code { font-family:var(--mono); font-size:13.5px; background:var(--line-2); padding:2px 7px; border-radius:7px; color:var(--ink); word-break:break-all; overflow-wrap:anywhere; }
+
+  /* === CONTEÚDO MARKDOWN (reports convertidos sem classes semânticas) === */
+  .container > h1:not(.page-title) { font-family:var(--display); font-size:clamp(30px,4.8vw,46px); font-weight:600; line-height:1.05; letter-spacing:-0.04em; color:var(--ink); margin:4px 0 20px; }
+  .container h2 { font-family:var(--display); font-size:25px; font-weight:600; letter-spacing:-0.025em; color:var(--ink); margin:42px 0 16px; padding-top:24px; border-top:1px solid var(--line); line-height:1.15; }
+  .container h3 { font-family:var(--display); font-size:20px; font-weight:600; letter-spacing:-0.02em; color:var(--ink); margin:28px 0 11px; line-height:1.2; }
+  .container h4 { font-size:16px; font-weight:700; color:var(--ink-2); margin:20px 0 8px; }
+  .container blockquote { margin:20px 0; padding:18px 22px; background:var(--accent-soft); border-left:3px solid var(--accent); border-radius:0 var(--r-sm) var(--r-sm) 0; color:var(--ink-2); }
+  .container blockquote p:last-child { margin-bottom:0; }
+  .container pre { background:var(--deep); color:#E8EAF0; padding:18px; border-radius:var(--r-sm); overflow-x:auto; margin:0 0 18px; font-size:13px; }
+  .container pre code { background:none; padding:0; color:inherit; }
+  .container a { color:var(--accent-ink); text-underline-offset:3px; }
+
+  /* === TABLES === */
+  .table-wrap { overflow-x:auto; margin:12px 0 18px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; font-weight:600; color:var(--faint); padding:0 12px 10px 0; border-bottom:1px solid var(--ink); font-size:10.5px; text-transform:uppercase; letter-spacing:0.07em; }
+  td { padding:11px 12px 11px 0; color:var(--ink-2); border-bottom:1px solid var(--line); vertical-align:top; line-height:1.5; }
+  tr:last-child td { border-bottom:none; } td strong { color:var(--ink); font-weight:600; } td code { font-size:13px; }
+
+  /* === GLASS CARDS (compartilham o tratamento frosted + hover-lift) === */
+  .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+  .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map,
+  .note, .callout, .opportunity, .danger {
+    background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%);
+    border:1px solid var(--glass-line); box-shadow:var(--shadow-sm);
+  }
+  .brand-card, .concept-card, .tier-card, .timeline-day, .primary-text-box, .faq, .hook-row, .headline-card {
+    transition:transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s ease; }
+  .brand-card:hover, .concept-card:hover, .tier-card:hover, .timeline-day:hover, .faq:hover, .hook-row:hover, .headline-card:hover {
+    transform:translateY(-3px); box-shadow:var(--shadow-lift); }
+
+  /* === QUOTE / VOC === */
+  .quote { margin:14px 0; padding:20px 24px; border-radius:var(--r-sm); font-size:15.5px; color:var(--ink); line-height:1.55; font-family:var(--mono); border-left:3px solid var(--accent); }
+  .quote-source { display:block; margin-top:14px; font-size:11px; color:var(--faint); font-family:var(--sans); letter-spacing:0.08em; text-transform:uppercase; font-weight:600; }
+  .script-block { border-radius:var(--r-sm); padding:22px 26px; margin:16px 0; font-family:var(--mono); font-size:13.5px; color:var(--ink-2); line-height:1.62; white-space:pre-wrap; word-break:break-word; }
+
+  /* === NOTE / CALLOUT / OPPORTUNITY / DANGER (cards glass + overline-label + glow leve) === */
+  .note, .callout, .opportunity, .danger { font-size:15.5px; line-height:1.6; padding:20px 24px; border-radius:var(--r); margin:18px 0; position:relative; }
+  /* RÓTULO = só o PRIMEIRO <strong> (filho direto) do card. Qualquer <strong> seguinte é ênfase inline no corpo — NUNCA vira rótulo (evita quebrar a frase no meio). */
+  .note > strong:first-of-type, .callout > strong:first-of-type, .opportunity > strong:first-of-type, .danger > strong:first-of-type { display:block; font-family:var(--sans); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+  .note strong, .callout strong, .opportunity strong, .danger strong { font-weight:600; }
+  .note { color:var(--muted); } .note > strong:first-of-type { color:var(--faint); }
+  .callout { color:var(--ink); background:linear-gradient(180deg,rgba(255,241,232,.9),rgba(255,241,232,.6)); border-color:#FAD9C4; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 12px 32px rgba(255,106,26,.12); }
+  .callout > strong:first-of-type { color:var(--accent-deep); }
+  .opportunity { color:#0C2A20; background:linear-gradient(180deg,rgba(233,248,241,.85),rgba(233,248,241,.6)); border-color:#CFEEE1; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 10px 30px rgba(14,159,110,.10); }
+  .opportunity > strong:first-of-type { color:#0B7A53; }
+  .danger { color:#3A1714; background:linear-gradient(180deg,rgba(251,234,232,.9),rgba(251,234,232,.6)); border-color:#F2D2CC; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 12px 32px rgba(192,57,43,.10); }
+  .danger > strong:first-of-type { color:var(--red); }
+
+  /* === PILLS / BADGES (liquid glass) === */
+  .pill { display:inline-block; font-size:11px; font-weight:600; padding:5px 12px; border-radius:9px; letter-spacing:0.01em; text-transform:uppercase; margin-right:5px;
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.5); }
+  .pill-saturated, .pill-bof, .pill-pending { background:rgba(229,72,77,.12); color:#C9343A; border-color:rgba(229,72,77,.2); }
+  .pill-common, .pill-mof { background:rgba(183,121,31,.13); color:#92600F; border-color:rgba(183,121,31,.22); }
+  .pill-rare, .pill-win, .pill-ok { background:rgba(14,159,110,.13); color:#0B7A53; border-color:rgba(14,159,110,.22); }
+  .pill-absent, .pill-tof { background:rgba(255,106,26,.12); color:var(--accent-ink); border-color:rgba(255,106,26,.24); }
+
+  .voc-words { margin:16px 0 4px; line-height:2.4; }
+  .voc-words span { display:inline-block; background:var(--glass); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid var(--glass-line); color:var(--muted); padding:7px 14px; border-radius:11px; margin:3px 7px 3px 0; font-size:13px; font-family:var(--mono); }
+
+  .score { display:inline-block; background:var(--ink); color:#FFF; font-size:11px; font-weight:600; padding:3px 10px; border-radius:8px; }
+  .score-high { background:var(--green); } .score-mid { background:var(--amber); } .score-low { background:var(--red); }
+
+  /* === WINNER (dark glass + glow halo) === */
+  .winner { position:relative; background:linear-gradient(160deg,rgba(20,25,35,.97),rgba(12,15,20,.97)); color:#D7D9E3; border-radius:22px; padding:40px 42px; margin:28px 0; border:1px solid rgba(255,255,255,.08); box-shadow:0 30px 80px rgba(12,15,20,.30); overflow:hidden; }
+  .winner::after { content:""; position:absolute; top:-40%; right:-10%; width:60%; height:120%; z-index:0; background:radial-gradient(circle,rgba(255,106,26,.42),transparent 62%); filter:blur(40px); pointer-events:none; }
+  .winner > * { position:relative; z-index:1; }
+  .winner strong { color:#FFF; font-weight:600; }
+  .winner p { color:#9EA3B2; font-size:17px; line-height:1.62; margin-bottom:8px; }
+  .winner .winner-label { font-size:11px; text-transform:uppercase; letter-spacing:0.13em; color:#FFB37A; margin-bottom:18px; font-weight:600; }
+  .winner .winner-name { font-family:var(--display); font-size:32px; font-weight:700; color:#FFF; margin-bottom:18px; letter-spacing:-0.035em; line-height:1.04; text-shadow:0 2px 30px rgba(255,106,26,.32); }
+
+  /* === KPI — STATS GIGANTES num painel glass com divisores + glow === */
+  .kpi-grid { display:flex; flex-wrap:wrap; gap:0; margin:24px 0; padding:26px 28px; border-radius:var(--r);
+    background:var(--glass); -webkit-backdrop-filter:blur(22px) saturate(155%); backdrop-filter:blur(22px) saturate(155%);
+    border:1px solid var(--glass-line); box-shadow:var(--shadow); }
+  .kpi-card { flex:1 1 0; min-width:140px; padding:0 32px; display:flex; flex-direction:column; }
+  .kpi-card:first-child { padding-left:0; } .kpi-card:last-child { padding-right:0; }
+  .kpi-card + .kpi-card { border-left:1px solid var(--line); }
+  .big-num { order:1; font-family:var(--display); font-size:clamp(28px,3.8vw,40px); font-weight:700; letter-spacing:-0.05em; line-height:0.98; color:var(--ink); font-variant-numeric:tabular-nums; margin-bottom:8px; text-shadow:0 2px 24px rgba(255,106,26,.16); }
+  .big-num-label { order:2; font-size:13px; color:var(--muted); letter-spacing:-0.005em; font-weight:500; line-height:1.35; }
+
+  /* === outras cards (radius/padding) === */
+  .brand-card, .concept-card { border-radius:var(--r); padding:30px 32px; margin-bottom:24px; }
+  .tier-card { border-radius:var(--r); padding:26px 28px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .tier-card.popular { border:1.5px solid var(--accent); position:relative; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 14px 40px rgba(255,106,26,.16); }
+  .tier-card.popular::before { content:"POPULAR"; position:absolute; top:-10px; left:24px; background:var(--accent); color:#FFF; font-size:10px; font-weight:600; letter-spacing:0.07em; padding:4px 12px; border-radius:8px; box-shadow:0 4px 14px rgba(255,106,26,.38); }
+  .timeline-day { border-radius:var(--r); padding:26px 28px; margin-bottom:16px; }
+  .timeline-day-label { display:inline-block; font-size:10.5px; color:#FFF; background:var(--ink); padding:4px 13px; border-radius:8px; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:16px; }
+  .timeline { margin:18px 0; }
+  .timeline-row { display:flex; gap:20px; padding:15px 0; border-bottom:1px solid var(--line-2); }
+  .timeline-time { flex-shrink:0; width:94px; font-family:var(--mono); font-size:11.5px; color:var(--faint); padding-top:3px; }
+  .timeline-label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600; color:var(--ink); }
+  .timeline-content { flex:1; } .timeline-content p { margin-bottom:6px; font-size:15px; }
+
+  .primary-text-box { border-radius:var(--r); padding:24px 28px; margin:14px 0; }
+  .pt-label { font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; margin-bottom:12px; }
+  .primary-text-box p { font-size:15px; color:var(--ink-2); line-height:1.64; }
+  .faq { margin:14px 0; padding:26px 30px; border-radius:var(--r); }
+  .faq-q { font-family:var(--display); font-size:19px; font-weight:600; margin-bottom:10px; letter-spacing:-0.025em; }
+  .faq-a { font-size:15.5px; color:var(--muted); line-height:1.62; }
+  .hook-row { border-radius:var(--r); padding:22px 26px; margin-bottom:12px; }
+  .hook-label { font-size:10.5px; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; margin-bottom:10px; }
+  .hook-text { font-size:18px; color:var(--ink); line-height:1.45; font-weight:600; margin-bottom:8px; letter-spacing:-0.02em; }
+  .hook-use { font-size:13px; color:var(--muted); line-height:1.5; }
+  .headline-card { border-radius:var(--r); padding:24px 28px; margin-bottom:14px; font-family:var(--display); font-size:21px; font-weight:600; line-height:1.32; letter-spacing:-0.03em; }
+  .headline-card.top { border:1.5px solid var(--accent); box-shadow:0 1px 2px rgba(12,15,20,.04), 0 14px 40px rgba(255,106,26,.14); }
+  .headline-card .hl-num { font-family:var(--sans); font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px; font-weight:600; }
+  .headline-card .hl-justify { font-family:var(--sans); font-size:14px; color:var(--muted); margin-top:12px; line-height:1.55; font-weight:400; letter-spacing:-0.008em; }
+  .ascii-map { border-radius:var(--r); padding:26px; font-family:var(--mono); font-size:12.5px; line-height:1.55; color:var(--ink-2); white-space:pre; overflow-x:auto; }
+
+  .check-row { display:flex; align-items:flex-start; gap:14px; margin-bottom:14px; }
+  .check-icon { flex-shrink:0; width:24px; height:24px; border-radius:8px; background:var(--green); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; margin-top:1px; box-shadow:0 4px 14px rgba(14,159,110,.3); }
+
+  /* === COMPATIBILIDADE COM O PADRÃO APROVADO DO PROJETO RETENÇÃO === */
+  .step { display:flex; gap:14px; padding:13px 0; border-bottom:1px solid var(--line-2); }
+  .step:last-child { border-bottom:none; }
+  .step-num { flex-shrink:0; width:26px; height:26px; border-radius:9px; background:var(--ink); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:600; margin-top:1px; }
+  .step-body { font-size:15px; color:var(--ink-2); line-height:1.55; }
+  .week { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:var(--accent-ink); margin:22px 0 6px; }
+  .gate { font-size:13.5px; color:var(--green); font-weight:600; margin:8px 0 2px; padding-left:40px; }
+  .check { list-style:none; margin-left:0; }
+  .check li { padding-left:30px; position:relative; }
+  .check li::before { content:""; position:absolute; left:2px; top:4px; width:15px; height:15px; border:1.5px solid var(--faint); border-radius:5px; }
+  .sig-block { padding:22px 24px; border-radius:var(--r); background:var(--glass); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); margin:0 0 22px; }
+  .kpi { display:flex; flex-wrap:wrap; gap:0; margin:24px 0; padding:26px 28px; border-radius:var(--r); background:var(--glass); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); }
+  .kpi > div { flex:1 1 0; min-width:120px; padding:0 24px; }
+  .kpi > div:first-child { padding-left:0; }
+  .kpi > div + div { border-left:1px solid var(--line); }
+  .big { font-family:var(--display); font-size:clamp(28px,3.8vw,40px); font-weight:700; letter-spacing:-0.05em; line-height:.98; margin-bottom:8px; }
+  .big-label { font-size:12.5px; color:var(--muted); line-height:1.35; font-weight:500; }
+
+  /* === COMPONENTES DE RELATÓRIOS HISTÓRICOS (retidos no sistema canônico) === */
+  .svgn { font-size:12px; color:var(--faint); background:var(--line-2); }
+  .pill-wait { background:rgba(183,121,31,.13); color:#92600F; border-color:rgba(183,121,31,.22); }
+  .brand-card .bc-tier { font-size:11px; color:var(--accent-ink); text-transform:uppercase; letter-spacing:.08em; font-weight:600; margin-bottom:16px; }
+  .tier-name { font-family:var(--display); font-size:18px; font-weight:600; letter-spacing:-.02em; color:var(--ink); margin-bottom:4px; }
+  .tier-role { font-size:13.5px; color:var(--muted); line-height:1.45; }
+  .tier-price { font-family:var(--display); font-size:26px; font-weight:700; color:var(--ink); letter-spacing:-.03em; flex-shrink:0; }
+  .swatch-row { display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 8px; }
+  .swatch { display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+  .swatch .chip { width:84px; height:60px; border-radius:12px; border:1px solid var(--line); box-shadow:var(--shadow-sm); }
+  .swatch .lab { font-size:11px; color:var(--muted); font-family:var(--mono); }
+  .big-num.zero, .big-num.go { color:var(--green); }
+  .step-n { flex-shrink:0; width:28px; height:28px; border-radius:9px; background:var(--ink); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; margin-top:2px; }
+  .rot-card { background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); border-radius:var(--r); padding:28px 30px; margin-bottom:26px; }
+  .rot-head { display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; margin-bottom:6px; }
+  .rot-cod { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--accent-ink); }
+  .rot-tit { font-family:var(--display); font-size:22px; font-weight:600; letter-spacing:-.02em; }
+  .rot-meta { font-size:13px; color:var(--muted); margin-bottom:14px; }
+  .rot-obs { background:var(--amber-soft); border:1px solid #EFE0C0; border-radius:12px; padding:12px 16px; font-size:14px; color:#6B4E10; margin:10px 0; }
+  .rot-ia { background:var(--accent-soft); border:1px solid #FAD9C4; border-radius:12px; padding:12px 16px; font-size:14px; margin:10px 0; }
+  .rot-ia b { color:var(--accent-deep); }
+  .cena { display:grid; grid-template-columns:120px 1fr; gap:8px 16px; padding:10px 0; border-top:1px solid var(--line-2); font-size:14.5px; }
+  .cena .cn { font-weight:600; color:var(--ink); font-size:13px; }
+  .cena .cv { color:var(--faint); font-size:13px; }
+  .cena .cf { color:var(--ink-2); }
+  .rot-foot { margin-top:12px; font-size:13.5px; color:var(--muted); }
+  .rot-card .chip { display:inline-block; font-size:11px; font-weight:600; padding:4px 10px; border-radius:8px; background:rgba(255,106,26,.10); color:var(--accent-ink); margin-right:6px; text-transform:uppercase; letter-spacing:.04em; }
+  .group { margin-bottom:54px; }
+  .group-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.13em; color:var(--ink); margin-bottom:22px; display:flex; align-items:center; gap:14px; }
+  .group-label::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),transparent); }
+  .group-label .gn { color:var(--accent-ink); font-variant-numeric:tabular-nums; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:16px; }
+  .card { display:flex; flex-direction:column; gap:6px; background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%); border:1px solid var(--glass-line); border-radius:var(--r); padding:22px 24px; box-shadow:var(--shadow-sm); text-decoration:none; color:inherit; transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s ease; position:relative; overflow:hidden; }
+  .card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lift); }
+  .card .top { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px; }
+  .card .ph { font-size:11px; font-weight:600; color:var(--faint); letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+  .card h3 { font-family:var(--display); font-size:18px; font-weight:600; letter-spacing:-.02em; line-height:1.2; color:var(--ink); margin:0; }
+  .card p { font-size:13.5px; color:var(--muted); line-height:1.5; margin:2px 0 0; }
+  .card .go { margin-top:12px; font-size:13px; font-weight:600; color:var(--accent-ink); display:flex; align-items:center; gap:6px; }
+  .card .go svg { width:15px; height:15px; stroke:currentColor; stroke-width:2; fill:none; transition:transform .2s ease; }
+  .card:hover .go svg { transform:translateX(3px); }
+  .card.feature { background:linear-gradient(160deg,rgba(20,25,35,.97),rgba(12,15,20,.97)); border-color:rgba(255,255,255,.08); }
+  .card.feature h3, .card.feature .ph { color:#FFF; }
+  .card.feature p { color:#9EA3B2; }
+  .card.feature .go { color:#FFB37A; }
+  .card.feature::after { content:""; position:absolute; top:-30%; right:-10%; width:55%; height:130%; background:radial-gradient(circle,rgba(255,106,26,.35),transparent 62%); filter:blur(34px); pointer-events:none; }
+  .card.feature > * { position:relative; z-index:1; }
+  .card.soon { opacity:.62; pointer-events:none; }
+  .pill-html { background:rgba(183,121,31,.13); color:#92600F; border-color:rgba(183,121,31,.22); }
+  .pill-soon { background:rgba(255,106,26,.10); color:var(--accent-ink); border-color:rgba(255,106,26,.20); }
+  .legend { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:14px; font-size:12px; color:var(--muted); }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:9px; height:9px; border-radius:50%; }
+
+  /* === ADVERTORIAL === */
+  .advertorial { background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%); border:1px solid var(--glass-line); border-radius:26px; padding:clamp(32px,5vw,56px); margin:28px 0; box-shadow:var(--shadow); }
+  .adv-kicker { font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; margin-bottom:22px; }
+  .adv-headline { font-family:var(--display); font-size:clamp(30px,3.8vw,44px); font-weight:700; line-height:1.04; letter-spacing:-0.04em; margin-bottom:18px; }
+  .adv-deck { font-size:20px; color:var(--muted); line-height:1.46; margin-bottom:16px; font-weight:400; letter-spacing:-0.015em; }
+  .adv-byline { font-size:11px; color:var(--faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:38px; font-weight:600; }
+  .adv-section-label { font-size:11px; color:var(--faint); text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-top:42px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .advertorial p { font-size:17.5px; color:var(--ink-2); line-height:1.72; margin-bottom:18px; } .advertorial p strong { color:var(--ink); font-weight:600; }
+  .advertorial hr { margin:32px 0; border:none; border-top:1px solid var(--line); }
+  .adv-cta { display:inline-block; background:var(--ink); color:#FFF; padding:16px 32px; border-radius:12px; font-size:15px; font-weight:600; letter-spacing:-0.01em; text-decoration:none; margin:14px 0; box-shadow:0 10px 30px rgba(12,15,20,.25); }
+
+  /* === A11Y / TOUCH === */
+  a { -webkit-tap-highlight-color:transparent; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:4px; }
+
+  hr { border:none; border-top:1px solid var(--line); margin:72px 0; }
+  .footer { font-size:13px; color:var(--faint); text-align:center; margin-top:96px; padding-top:40px; border-top:1px solid var(--line); letter-spacing:0.02em; }
+
+  /* ═══════════ GROWAI MOBILE SYSTEM v1 ═══════════ */
+  html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  body, .container, .wrap, .container > *, .wrap > *, .section, .subsection, .timeline-content, .check-row > div { min-width:0; }
+  body { overflow-wrap:anywhere; }
+  img, video, canvas, iframe { max-width:100%; height:auto; }
+  svg { max-width:100%; }
+  p, li, td, th, blockquote, a, .card, .phase, .note, .callout, .opportunity, .danger { overflow-wrap:anywhere; }
+  .table-wrap { max-width:100%; -webkit-overflow-scrolling:touch; overscroll-behavior-inline:contain; scrollbar-width:thin; }
+
+  /* === ANIMAÇÃO (progressive enhancement: visível sem JS) === */
+  .js .reveal { opacity:0; transform:translateY(20px); transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+  .js .reveal.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .js .reveal{opacity:1;transform:none;transition:none} *{scroll-behavior:auto} .brand-card,.faq,.hook-row,.headline-card,.tier-card,.timeline-day,.concept-card{transition:none} }
+
+  /* fallback: navegador sem backdrop-filter → fundo sólido (nunca película translúcida) */
+  @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+    .meta-bar > div, .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+    .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map, .note,
+    .kpi-grid, .voc-words span, .rot-card, .card, .advertorial {
+      background:linear-gradient(180deg,#FFFFFF,#FBFCFE);
+    }
+    .callout     { background:linear-gradient(180deg,#FFF3E9,#FFF7F0); }
+    .opportunity { background:linear-gradient(180deg,#EAF7F1,#F1FAF6); }
+    .danger      { background:linear-gradient(180deg,#FBECEA,#FCF2F0); }
+  }
+
+  /* touch/coarse em QUALQUER largura (iPad incluso): sem hover-lift nem sticky-hover */
+  @media (hover:none), (pointer:coarse) {
+    .brand-card:hover, .concept-card:hover, .tier-card:hover, .timeline-day:hover,
+    .faq:hover, .hook-row:hover, .headline-card:hover, .card:hover { transform:none; box-shadow:var(--shadow-sm); }
+    .toc li:hover { padding-left:4px; background:transparent; }
+    .toc li:hover a { color:var(--ink); }
+  }
+
+  /* ═══ ≤860px: SEM backdrop-filter (imune ao glitch/jank do blur no Safari iOS, cobre iPad portrait) + fundo sólido fosco ═══ */
+  @media (max-width:860px) {
+    .meta-bar > div, .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+    .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map, .note, .callout, .opportunity,
+    .danger, .kpi-grid, .pill, .voc-words span, .rot-card, .card, .advertorial {
+      -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+    }
+    /* glass → sólido fosco (nunca filme translúcido sobre o glow do fundo) */
+    .meta-bar > div, .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+    .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map, .note,
+    .kpi-grid, .voc-words span, .rot-card, .card, .advertorial, .sig-block, .kpi {
+      background:linear-gradient(180deg,#FFFFFF,#FBFCFE);
+    }
+    /* cards tintados → versão opaca (mesma família de cor GrowAI) */
+    .callout     { background:linear-gradient(180deg,#FFF3E9,#FFF7F0); }
+    .opportunity { background:linear-gradient(180deg,#EAF7F1,#F1FAF6); }
+    .danger      { background:linear-gradient(180deg,#FBECEA,#FCF2F0); }
+    /* cards dark continuam dark (winner já é ~.97 de alpha; feature idem) */
+    .card.feature { background:linear-gradient(160deg,rgba(20,25,35,.98),rgba(12,15,20,.98)); }
+  }
+
+  @media (max-width:640px) {
+    body { display:block; padding:24px max(14px,env(safe-area-inset-right)) 72px max(14px,env(safe-area-inset-left)); font-size:15.5px; }
+    .container, .wrap { width:100%; max-width:none; }
+    .logo-wrap { gap:10px; margin-bottom:24px; }
+    .logo-mark { width:34px; height:34px; }
+    .logo-word { font-size:19px; }
+    .page-title, .container > h1:not(.page-title) { font-size:clamp(28px,9vw,36px); line-height:1.08; letter-spacing:-0.035em; text-wrap:balance; }
+    .page-subtitle { max-width:none; margin-bottom:28px; font-size:16px; line-height:1.52; }
+    .meta-bar { grid-template-columns:1fr; margin-bottom:42px; }
+    .meta-bar > div { padding:14px 16px; font-size:14.5px; }
+    .toc { margin-bottom:46px; }
+    .toc li { align-items:flex-start; gap:12px; padding:14px 2px; font-size:16px; }
+    .toc li:hover { padding-left:2px; }
+    .section { margin-bottom:46px; }
+    .section-label, .group-label { flex-wrap:wrap; align-items:flex-start; gap:8px 10px; margin-bottom:17px; font-size:11px; letter-spacing:.09em; line-height:1.4; }
+    .section-label::after, .group-label::after { display:none; }
+    .subsection { margin-bottom:32px; }
+    .subsection-title { font-size:23px; }
+    .container h2 { margin-top:34px; padding-top:20px; font-size:22px; }
+    .container h3 { margin-top:24px; font-size:18px; }
+    p { font-size:15.5px; line-height:1.62; }
+    ul, ol { margin-left:18px; font-size:15px; line-height:1.6; }
+    code { word-break:normal; overflow-wrap:anywhere; }
+    .container blockquote { margin:16px 0; padding:16px 17px; }
+    .container pre, .ascii-map { padding:15px; font-size:11.5px; white-space:pre-wrap; word-break:break-word; }
+    .container pre code { display:block; max-width:100%; white-space:inherit; overflow-wrap:anywhere; word-break:break-word; }
+
+    .table-wrap { overflow:visible; margin:14px 0 22px; }
+    .mobile-table, .mobile-table tbody, .mobile-table tr, .mobile-table td { display:block; width:100%; }
+    .mobile-table { border-collapse:separate; font-size:14px; }
+    .mobile-table thead { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+    .mobile-table tbody { display:grid; gap:12px; }
+    .mobile-table tr { padding:8px 14px; border:1px solid var(--glass-line); border-radius:14px; background:linear-gradient(180deg,#FFFFFF,#FBFCFE); box-shadow:var(--shadow-sm); }
+    .mobile-table td { display:grid; grid-template-columns:minmax(86px,.36fr) minmax(0,.64fr); gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; line-height:1.48; }
+    .mobile-table td::before { content:attr(data-label); color:var(--faint); font-size:9.5px; font-weight:600; line-height:1.35; letter-spacing:.07em; text-transform:uppercase; }
+    .mobile-table td:last-child { border-bottom:0; }
+    .mobile-table .pill { margin:0; white-space:normal; }
+    .mobile-table-key-value td { display:block; padding:5px 0 10px; }
+    .mobile-table-key-value td::before { display:none; }
+    .mobile-table-key-value td:first-child { padding:10px 0 3px; border-bottom:0; color:var(--faint); font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+
+    .note, .callout, .opportunity, .danger, .sig-block, .primary-text-box, .faq, .hook-row, .headline-card { padding:18px; border-radius:15px; }
+    .quote, .script-block { padding:17px 18px; font-size:13px; }
+    .brand-card, .concept-card, .timeline-day, .rot-card { padding:20px 18px; }
+    .winner { padding:26px 20px; border-radius:18px; }
+    .winner .winner-name { font-size:26px; }
+    .winner p { font-size:15.5px; }
+    .kpi-grid { flex-direction:column; gap:0; padding:22px 20px; }
+    .kpi-card { padding:0; min-width:0; }
+    .kpi-card + .kpi-card { margin-top:20px; border-left:none; border-top:1px solid var(--line); padding-top:20px; }
+    .big-num, .big { font-size:32px; }
+    .timeline-row { flex-direction:column; gap:4px; }
+    .timeline-time { width:auto; }
+    .tier-card { flex-direction:column; align-items:flex-start; padding:22px 18px; }
+    .tier-price { font-size:23px; }
+    .kpi { flex-direction:column; gap:0; padding:22px 20px; }
+    .kpi > div { padding:0; min-width:0; }
+    .kpi > div + div { margin-top:18px; border-left:none; border-top:1px solid var(--line); padding-top:18px; }
+    .step { gap:10px; }
+    .gate { padding-left:36px; }
+    .cena { grid-template-columns:1fr; gap:4px; }
+    .grid { grid-template-columns:minmax(0,1fr); }
+    .card { padding:19px 18px; }
+    .card .top, .rot-head, .swatch-row { flex-wrap:wrap; }
+    .advertorial { padding:24px 18px; border-radius:18px; }
+    .adv-headline { font-size:28px; }
+    .adv-deck { font-size:17px; }
+    .advertorial p { font-size:16px; }
+    .adv-cta { display:block; width:100%; padding:14px 18px; text-align:center; }
+    hr { margin:48px 0; }
+    .footer { margin-top:58px; padding-top:26px; font-size:12px; }
+    .js .reveal { opacity:1; transform:none; transition:none; }
+    .brand-card:hover, .concept-card:hover, .tier-card:hover, .timeline-day:hover, .faq:hover,
+    .hook-row:hover, .headline-card:hover, .card:hover { transform:none; }
+  }
+
+  @media (max-width:380px) {
+    body { padding:20px 12px 64px; }
+    .page-title, .container > h1:not(.page-title) { font-size:28px; }
+    .mobile-table td { grid-template-columns:1fr; gap:4px; }
+    .note, .callout, .opportunity, .danger, .sig-block, .primary-text-box, .faq, .hook-row, .headline-card,
+    .brand-card, .concept-card, .timeline-day, .rot-card, .winner, .advertorial { padding-left:16px; padding-right:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="logo-wrap reveal" data-brand="growai">
+  <svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="GrowAI">
+    <defs>
+      <linearGradient id="growaiG" x1="12%" y1="6%" x2="88%" y2="96%">
+        <stop offset="0%" stop-color="#FF9A3D"/>
+        <stop offset="52%" stop-color="#FF6A1A"/>
+        <stop offset="100%" stop-color="#E63C0A"/>
+      </linearGradient>
+    </defs>
+    <circle cx="100" cy="100" r="100" fill="url(#growaiG)"/>
+    <text x="100" y="135" text-anchor="middle" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="152" fill="#FFFFFF">g</text>
+  </svg>
+  <span class="logo-word">GrowAI</span>
+</div>
+
+  <h1 class="page-title reveal">Pesquisa de Mercado &amp; VOC — Ana Costa</h1>
+  <p class="page-subtitle reveal">As duas mulheres que seguem a Ana, na voz delas: awareness, sofisticação do mercado e 50+ frases reais com fonte.</p>
+
+  <div class="meta-bar reveal">
+    <div><strong>Cliente</strong> Ana Costa</div>
+    <div><strong>Fase</strong> 02 · Pesquisa de mercado</div>
+    <div><strong>Data</strong> 12/08/2026</div>
+    <div><strong>Alimenta</strong> 03 · 04 · 06</div>
+  </div>
+
+  <div class="section" id="s1">
+    <div class="section-label reveal"><span class="num">01</span>O retrato em uma frase</div>
+    <div class="callout reveal"><strong>A síntese</strong> A Ana fala com duas mulheres diferentes, e as duas estão gritando a mesma coisa: <strong>"ninguém me olha como indivíduo"</strong>. A gestante ouve "é normal" do pré-natal. A mulher de 50 ouve "é da idade" do consultório. As duas procuram no Google, no YouTube e no direct da Ana o que o sistema de saúde não entrega: explicação, individualização e acolhimento. Isso define o que a Ana vende: não é "curso de nutrição", é <strong>cuidado que enxerga a fase que a mulher está vivendo</strong>.</div>
+  </div>
+
+  <div class="section" id="s2">
+    <div class="section-label reveal"><span class="num">02</span>Avatar A — A gestante (o público do TikTok)</div>
+    <p class="reveal"><strong>Quem é:</strong> gestante brasileira, cada vez mais na faixa dos 30+, muitas no pré-natal do SUS. Chega na Ana via TikTok, em desespero pontual: enjoo, ferro, diabetes gestacional.</p>
+    <p class="reveal"><strong>Nível de consciência (Schwartz):</strong> consciente do problema. Ela sabe o que dói, mas não sabe que existe uma categoria de solução chamada "acompanhamento nutricional da gestação". Exceção: a recém-diagnosticada com diabetes gestacional pula na hora pra consciente da solução, com urgência máxima. <span class="pill pill-tof">gatilho mais quente</span></p>
+    <p class="reveal"><strong>Sofisticação do mercado: estágio 2.</strong> Quase ninguém faz oferta direta pra gestante-consumidora no Brasil. Não precisa de mecanismo mirabolante: especificidade + autoridade CRN ganham o jogo.</p>
+
+    <div class="subsection reveal"><div class="subsection-title">A dor, na voz dela</div></div>
+    <div class="quote reveal">"todos os vômitos contorcendo meu estômago, os enjoos, não poder nunca comer em paz normalmente porque em todas as refeições me vem o vômito, fraqueza e cansaço frequente, fome a cada 2 horas"<span class="quote-source">1ª dor · r/desabafos, mai/2026</span></div>
+    <div class="quote reveal">"E quem não consegue comer, por falta de apetite, enjôo e vômito?"<span class="quote-source">1ª dor · comentário com 22 likes em vídeo de 130 mil views. Ficou sem resposta: todo conteúdo ensina O QUE comer; ninguém atende quem NÃO CONSEGUE comer</span></div>
+    <div class="quote reveal">"Sempre quando começo a tomar o sulfato ferroso, eu vômito só um líquido amarelo com gosto de ferro... Não sei porque isso acontece"<span class="quote-source">2ª dor · o tema do vídeo de 562 mil views da Ana</span></div>
+    <div class="quote reveal">"Eu to tomando Viferrin, e estou passando muito mal [...] experimentei passar dois dias sem, foram dois dias que comi bem, dormi bem"<span class="quote-source">2ª dor · gestante de 3 meses decidindo sozinha se abandona o suplemento</span></div>
+    <div class="quote reveal">"No SUS eles não analisam nada, é a mesma dose e os mesmos medicamentos para todas nós."<span class="quote-source">3ª dor · pré-natal que padroniza</span></div>
+    <div class="quote reveal">"Sim descobri a diabetes na gestação e arrasador, estou com 27 semanas e amo comer"<span class="quote-source">4ª dor · diabetes gestacional como choque + luto alimentar</span></div>
+    <div class="opportunity reveal"><strong>E a prova de que ela paga</strong> "Consultei uma nutri especializada (consulta online, não achei caro) e ela explicou muito bem como eu deveria me alimentar [...] Ajudou demais" (r/maternidadeBR, abr/2026). Demanda paga por nutricionista gestacional online, dita com todas as letras.</div>
+
+    <div class="subsection reveal"><div class="subsection-title">Desejos e objeções</div></div>
+    <p class="reveal"><strong>Hierarquia de desejos:</strong> 1) bebê saudável (desejo raiz) · 2) comer em paz e viver a gestação sem sofrimento · 3) ser olhada como indivíduo · 4) paz mental de estar fazendo certo.</p>
+    <div class="table-wrap reveal">
+      <table>
+        <thead><tr><th>Objeção</th><th>Como cai</th></tr></thead>
+        <tbody>
+          <tr><td>"Já tenho pré-natal"</td><td>A própria VOC responde: o pré-natal não explica nem individualiza</td></tr>
+          <tr><td>"Consulta é cara"</td><td>Produto digital de R$ 27 a R$ 297 entra onde a consulta não cabe</td></tr>
+          <tr><td>"Não tenho energia"</td><td>Formato curto, no celular, direto ao ponto</td></tr>
+          <tr><td>"É confiável?"</td><td>CRN + o conteúdo gratuito já provou valor 2,6 milhões de vezes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="s3">
+    <div class="section-label reveal"><span class="num">03</span>Avatar B — A mulher 45+ (o público real do Instagram)</div>
+    <p class="reveal"><strong>Quem é:</strong> brasileira de 45 a 60 anos, no climatério ou na menopausa. 63% economicamente ativas: ela decide o próprio gasto. São cerca de 30 milhões no Brasil, só 238 mil diagnosticadas pelo SUS. É a fatia de 57,6% da audiência do Instagram da Ana, hoje sem nenhum conteúdo nem oferta feitos pra ela.</p>
+    <p class="reveal"><strong>Nível de consciência:</strong> consciente do problema, e muitas nem nomearam o problema ainda: <em>"tenho 53 anos agora entendi minha insônia, queda de cabelo [...] estou apavorada"</em>. Ela só entendeu o que vivia lendo um artigo na internet.</p>
+    <div class="danger reveal"><strong>Sofisticação: estágio 4 — ela já ouviu todas as promessas</strong> "tenho 1,60 e estou pesando 126 k não consigo emagrecer, já fiz tratamento com nutricionista, já fiz tratamento mais de dois anos usando medicação com endocrinologista e não consegui emagrecer" (Doctoralia, 52 anos). Promessa genérica de emagrecimento está morta pra esse avatar (e é vedada pelo conselho). O que abre a porta é o mecanismo novo: <strong>"seu corpo mudou de fase; a estratégia muda junto"</strong>. Identificação antes de promessa, sempre.</div>
+
+    <div class="subsection reveal"><div class="subsection-title">A dor, na voz dela</div></div>
+    <div class="quote reveal">"Minha vida inteira fui uma pessoa magra. Porém sem mudar em nada meus hábitos, quando entrei na menopausa engordei 15 kilos. Nada do que eu faço me faz emagrecer."<span class="quote-source">Peso e metabolismo · Doctoralia</span></div>
+    <div class="quote reveal">"A 8 meses venho suando em excesso na área do rosto, pescoço, cabeça. Tenho vergonha, pareço até um pião de obra [...] A minha ginecologista receitou TIBILONA, não adiantou. Ajuda."<span class="quote-source">Calores com vergonha social · Doctoralia, 59 anos</span></div>
+    <div class="quote reveal">"Eu sempre vou ao ginecologista. Falo com ele que estou sem libido, ressecada. Ele já me deu hormônio, mas ficou do mesmo jeito. Então, pra quê?"<span class="quote-source">Médico que não resolve · estudo SciELO, 53 anos</span></div>
+    <div class="quote reveal">"tem muitas perguntas que nós mulheres queremos fazer a um médico, mas não temos coragem"<span class="quote-source">Vergonha na consulta · estudo SciELO, 47 anos</span></div>
+    <div class="quote reveal">"Estou muito triste porque não tenho mais pique."<span class="quote-source">Identidade e energia · ciclista que pedalava 500 km em 4 dias, antes da menopausa</span></div>
+    <div class="quote reveal">"não sei qual profissional procurar"<span class="quote-source">Perdida no caminho · pós-histerectomia, acima do peso, dores, pressão alta</span></div>
+    <div class="opportunity reveal"><strong>A dor que desenha o produto: solidão</strong> "Precisamos falar, precisamos urgentemente de grupos de auto-ajuda, como o AA" (51 anos, estudo em revista médica) · "Temos de conversar. Nenhuma mulher tem de passar por tudo isso calada" (empresária, 55, Revista Encontro nov/2025). Elas estão pedindo a comunidade, com essas palavras.</div>
+
+    <div class="subsection reveal"><div class="subsection-title">Desejos e objeções</div></div>
+    <p class="reveal"><strong>Hierarquia de desejos:</strong> 1) voltar a se sentir ela mesma · 2) ser ouvida e levada a sério · 3) pertencer: conversar com mulheres que vivem o mesmo · 4) um caminho claro, com começo.</p>
+    <div class="table-wrap reveal">
+      <table>
+        <thead><tr><th>Objeção</th><th>Como cai</th></tr></thead>
+        <tbody>
+          <tr><td>"Já tentei de tudo"</td><td>Mecanismo da fase + prova social de iguais (mulheres da comunidade, não modelos de 30 anos)</td></tr>
+          <tr><td>"Tenho medo de hormônio"</td><td>A oferta não é hormônio: é alimentação, sono e hábito. Zero conflito</td></tr>
+          <tr><td>"Tenho vergonha de falar disso"</td><td>Comunidade fechada, só de mulheres, mediada por profissional</td></tr>
+          <tr><td>"Mais uma mensalidade?"</td><td>Ancorar no que ela já gasta tentando sozinha (suplemento por conta própria, dietas que falham)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" id="s4">
+    <div class="section-label reveal"><span class="num">04</span>O inimigo comum (a descoberta que une a marca)</div>
+    <p class="reveal">As duas mulheres, com décadas de diferença, reclamam da mesma coisa com quase as mesmas palavras. A gestante: <em>"é a mesma dose e os mesmos medicamentos para todas nós"</em>. A mulher de 57: <em>"Cada um acha de um jeito e não chegam a conclusão alguma"</em>.</p>
+    <div class="winner reveal">
+      <div class="winner-label">O inimigo da marca</div>
+      <div class="winner-name">O cuidado padronizado</div>
+      <p>A bandeira da Ana: <strong>nenhuma mulher é dose única.</strong> Cada fase (gestação, pós-parto, 40+, menopausa) pede outra nutrição. Esse é o fio que costura o TikTok da gestante, o Instagram da mulher madura, os produtos e a comunidade. O relatório 04 transforma isso em mecanismo nomeado.</p>
+    </div>
+  </div>
+
+  <div class="section" id="s5">
+    <div class="section-label reveal"><span class="num">05</span>Causa raiz: por que essa lacuna existe</div>
+    <div class="check-row reveal"><span class="check-icon">1</span><div><strong>O sistema trata protocolo, não pessoa.</strong><br><span style="color:var(--muted);">Consulta de rede pública não tem tempo pra individualizar por fase hormonal. A frustração vaza pra internet, onde a Ana está.</span></div></div>
+    <div class="check-row reveal"><span class="check-icon">2</span><div><strong>Tabu.</strong><br><span style="color:var(--muted);">A menopausa só começou a sair do silêncio na mídia brasileira em 2025/2026. Quem chegar agora com autoridade e acolhimento pega a onda no início.</span></div></div>
+    <div class="check-row reveal"><span class="check-icon">3</span><div><strong>Informação fragmentada.</strong><br><span style="color:var(--muted);">"fui procurando informações em lugares diferentes, aqui e ali" (assinante de comunidade concorrente). Elas pagam pra ter tudo num lugar confiável.</span></div></div>
+  </div>
+
+  <div class="section" id="s6">
+    <div class="section-label reveal"><span class="num">06</span>Implicações estratégicas (o que as próximas fases devem honrar)</div>
+    <div class="check-row reveal"><span class="check-icon">1</span><div><strong>A comunidade não é formato de entrega, é a resposta à dor de solidão.</strong><br><span style="color:var(--muted);">Vender como rede de apoio com ciência dentro, nunca como "área de membros".</span></div></div>
+    <div class="check-row reveal"><span class="check-icon">2</span><div><strong>O conteúdo gestacional volta ao TikTok imediatamente.</strong><br><span style="color:var(--muted);">Alcance 16x maior e o avatar mais quente. 31 dos últimos 35 vídeos abandonaram os temas que funcionam.</span></div></div>
+    <div class="check-row reveal"><span class="check-icon">3</span><div><strong>Diabetes gestacional é o gatilho mais monetizável do avatar A.</strong><br><span style="color:var(--muted);">Urgência, busca ativa e patamar alto no Google Trends.</span></div></div>
+    <div class="check-row reveal"><span class="check-icon">4</span><div><strong>Pra mulher 45+, identificação antes de promessa.</strong><br><span style="color:var(--muted);">Nunca abrir com emagrecimento (sofisticação estágio 4 + regras do conselho).</span></div></div>
+    <div class="check-row reveal"><span class="check-icon">5</span><div><strong>As 2.800 mensagens do direct são a próxima mina de VOC.</strong><br><span style="color:var(--muted);">Minerar com autorização da Ana pra calibrar a copy da fase 06.</span></div></div>
+  </div>
+
+  <div class="section" id="s7">
+    <div class="section-label reveal"><span class="num">07</span>Qualidade dos dados</div>
+    <div class="note reveal"><strong>Base</strong> 50+ frases literais, todas com URL de origem, arquivadas em <code>.research/voc-gestantes.json</code> e <code>.research/voc-mulher-45mais.json</code>. Fontes: Reddit BR (via arquivo público Arctic Shift), comentários de YouTube em vídeos de 30 mil a 205 mil views, perguntas reais de pacientes na Doctoralia, comentários de leitoras no MD.Saúde, depoimentos de estudo brasileiro na SciELO e Revista Encontro (nov/2025). Nenhuma frase inventada ou parafraseada. Instagram e TikTok não foram minerados (exigem login); a fonte mais rica segue sendo o próprio direct da Ana.</div>
+    <p class="reveal"><strong>Próxima fase:</strong> 03 — Competitor Analysis.</p>
+  </div>
+
+
+  <p class="footer">GrowAI © 2026 · Aura Engine · uso interno GrowAI + apresentação ao cliente</p>
+
+</div>
+
+<script data-growai-responsive="v1">
+(() => {
+  document.querySelectorAll('.table-wrap table').forEach((table) => {
+    const headers = Array.from(table.querySelectorAll('thead th')).map((cell, index) =>
+      cell.textContent.trim() || `Coluna ${index + 1}`
+    );
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    if (!headers.length) {
+      const isKeyValue = rows.length && rows.every((row) => row.querySelectorAll(':scope > td').length === 2);
+      if (isKeyValue) table.classList.add('mobile-table', 'mobile-table-key-value');
+      return;
+    }
+
+    table.classList.add('mobile-table');
+    rows.forEach((row) => {
+      let headerIndex = 0;
+      Array.from(row.children).forEach((cell) => {
+        if (!cell.matches('td,th')) return;
+        if (!cell.hasAttribute('data-label')) {
+          cell.setAttribute('data-label', headers[headerIndex] || 'Informação');
+        }
+        headerIndex += Number(cell.getAttribute('colspan') || 1);
+      });
+    });
+  });
+})();
+</script>
+
+<!-- ═══════════════ ANIMAÇÃO (reveal no scroll + count-up nos números) ═══════════════ -->
+<script>
+(() => {
+  // Guard: sem IntersectionObserver, NADA é escondido (a classe .js nunca entra) — página estática visível.
+  if (!('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+  if (reduce) { reveals.forEach(e=>e.classList.add('in')); }
+  else {
+    const io = new IntersectionObserver((es)=>{es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);
+      e.target.querySelectorAll && e.target.querySelectorAll('[data-count]').forEach(countUp); } })},{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(el=>io.observe(el));
+    // FAILSAFE: se o observer não disparar (quirk do Safari iOS / Quick Look / webview), revela tudo em ~2.6s — nenhum bloco fica invisível
+    setTimeout(()=>{ reveals.forEach(el=>{ if(!el.classList.contains('in')){ el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(countUp); } }); }, 2600);
+  }
+  function countUp(el){
+    if (reduce || el.dataset.done) return; el.dataset.done = '1'; // guarda: IO + failsafe podem chamar os dois
+    const target = parseFloat(el.getAttribute('data-count')); if (isNaN(target)) return;
+    const suffix = el.getAttribute('data-suffix')||''; const prefix = el.getAttribute('data-prefix')||'';
+    const dec = (String(target).split('.')[1]||'').length; const dur = 900; const t0 = performance.now();
+    function frame(t){ const p = Math.min(1,(t-t0)/dur); const e = 1-Math.pow(1-p,3);
+      el.textContent = prefix + (target*e).toFixed(dec) + suffix; if (p<1) requestAnimationFrame(frame); else el.textContent = prefix+target.toFixed(dec)+suffix; }
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>

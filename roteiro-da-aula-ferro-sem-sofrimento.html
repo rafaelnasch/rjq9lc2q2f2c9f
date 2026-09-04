@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!--
+  RENDERING CONTRACT: placeholders `{{KEY}}` recebem dados JÁ escapados (html.escape / Jinja2 autoescape).
+  `{{KEY_HTML}}` aceita HTML sanitizado (DOMPurify/bleach).
+-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com; font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com data:; script-src 'self' 'unsafe-inline';">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F1F4F8">
+<meta name="growai-report-template" content="v6-retention">
+<title>LP da Isca &quot;Ferro Sem Sofrimento&quot; — copy, roteiro da VSL e decisão — GrowAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════ GROWAI REPORT DESIGN SYSTEM v6 · Retention / Liquid Glass ═══════════ */
+  :root{
+    --bg:#F1F4F8; --surface:#FFFFFF; --bg-soft:#F6F8FA; --ink:#0C0F14; --ink-2:#3A4150; --muted:#5B6472; --faint:#67717F;
+    --line:#E7EAF0; --line-2:#EEF1F5; --accent:#FF6A1A; --accent-2:#FF9A3D; --accent-deep:#C8470C; --accent-ink:#B33E0A; --accent-soft:#FFF1E8;
+    --green:#0E9F6E; --green-soft:#E9F8F1; --red:#C0392B; --red-soft:#FBEAE8;
+    --amber:#B7791F; --amber-soft:#FBF4E6; --deep:#0C0F14;
+    --glass:rgba(255,255,255,.66); --glass-line:rgba(255,255,255,.78);
+    --r:18px; --r-sm:12px;
+    --shadow:0 1px 2px rgba(12,15,20,.04), 0 18px 50px rgba(12,15,20,.10);
+    --shadow-sm:0 1px 2px rgba(12,15,20,.04), 0 8px 22px rgba(12,15,20,.06);
+    --shadow-lift:0 4px 8px rgba(12,15,20,.06), 0 26px 60px rgba(12,15,20,.13);
+    --display:'Satoshi','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;
+    --mono:'SF Mono','JetBrains Mono','Fira Code','Consolas',monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { overflow-x:hidden; max-width:100%; }
+  body {
+    font-family:var(--sans); background:var(--bg); color:var(--ink);
+    font-size:16px; line-height:1.62; letter-spacing:-0.011em;
+    min-height:100vh; display:flex; justify-content:center;
+    padding:52px 22px 110px; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    position:relative;
+  }
+  /* GLOW AMBIENTE (fundo, sutil — dá profundidade e faz o glass refratar) */
+  body::before { content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:
+      radial-gradient(48% 38% at 82% -4%, rgba(255,106,26,.13), transparent 72%),
+      radial-gradient(42% 40% at 8% 102%, rgba(255,154,61,.11), transparent 72%),
+      radial-gradient(38% 34% at 60% 48%, rgba(230,60,10,.05), transparent 70%); }
+  .container { max-width:880px; width:100%; position:relative; z-index:1; }
+
+  /* superfície de vidro reutilizada conceitualmente nas classes abaixo */
+  .logo-wrap { display:flex; align-items:center; gap:12px; margin-bottom:28px; }
+  .logo-mark { height:38px; width:38px; flex-shrink:0; border-radius:50%; box-shadow:0 6px 18px rgba(255,106,26,.32); }
+  .logo-word { font-family:var(--display); font-weight:700; font-size:21px; letter-spacing:-0.025em; color:var(--ink); }
+
+  /* === HEADER === */
+  .page-title { font-family:var(--display); font-size:clamp(30px,4.8vw,46px); font-weight:600; line-height:1.05; letter-spacing:-0.04em; color:var(--ink); margin:4px 0 14px; }
+  .page-subtitle { font-size:17px; color:var(--muted); font-weight:400; line-height:1.55; margin-bottom:36px; max-width:66ch; letter-spacing:-0.012em; }
+
+  /* === META BAR (grid glass — corrige valor longo) === */
+  .meta-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px; margin-bottom:56px;
+    background:linear-gradient(var(--line),var(--line)); border:1px solid var(--glass-line); border-radius:var(--r-sm); overflow:hidden;
+    box-shadow:var(--shadow-sm); }
+  .meta-bar > div { background:var(--glass); -webkit-backdrop-filter:blur(18px) saturate(150%); backdrop-filter:blur(18px) saturate(150%); padding:18px 22px; line-height:1.45; font-size:15px; color:var(--ink); }
+  .meta-bar strong { display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:6px; color:var(--faint); font-weight:600; }
+
+  /* === TOC (lista limpa) === */
+  .toc { margin-bottom:64px; }
+  .toc-title { font-size:11px; font-weight:600; color:var(--faint); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:18px; }
+  .toc ol { list-style:none; margin:0; padding:0; counter-reset:toc-counter; border-top:1px solid var(--line); }
+  .toc li { counter-increment:toc-counter; font-size:17px; line-height:1.4; display:flex; gap:18px; align-items:center; padding:16px 4px; border-bottom:1px solid var(--line); transition:padding-left .25s ease,background .25s ease; border-radius:10px; }
+  .toc li:hover { padding-left:14px; background:rgba(255,106,26,.05); }
+  .toc li::before { content:counter(toc-counter,decimal-leading-zero); color:var(--accent-ink); font-variant-numeric:tabular-nums; font-size:13px; font-weight:600; min-width:22px; }
+  .toc a { color:var(--ink); text-decoration:none; flex:1; }
+  .toc li:hover a { color:var(--accent-ink); }
+
+  /* === SECTIONS === */
+  .section { margin-bottom:56px; }
+  .section-label { font-family:var(--sans); font-size:12px; font-weight:600; color:var(--ink); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:20px; border:0; display:flex; align-items:center; gap:12px; }
+  .section-label::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),transparent); }
+  .section-label .num { color:var(--accent-ink); font-variant-numeric:tabular-nums; font-weight:600; }
+
+  .subsection { margin-bottom:40px; }
+  .subsection-title { font-family:var(--display); font-size:27px; font-weight:600; color:var(--ink); margin-bottom:16px; letter-spacing:-0.03em; line-height:1.12; }
+
+  /* === TYPOGRAPHY === */
+  p { font-size:16px; color:var(--ink-2); line-height:1.65; margin-bottom:14px; letter-spacing:-0.011em; }
+  p strong { color:var(--ink); font-weight:600; }
+  ul, ol { margin:6px 0 18px 20px; color:var(--ink-2); font-size:15.5px; line-height:1.65; }
+  li { margin-bottom:9px; padding-left:3px; } li::marker { color:var(--faint); } li strong { color:var(--ink); font-weight:600; }
+  code { font-family:var(--mono); font-size:13.5px; background:var(--line-2); padding:2px 7px; border-radius:7px; color:var(--ink); word-break:break-all; overflow-wrap:anywhere; }
+
+  /* === CONTEÚDO MARKDOWN (reports convertidos sem classes semânticas) === */
+  .container > h1:not(.page-title) { font-family:var(--display); font-size:clamp(30px,4.8vw,46px); font-weight:600; line-height:1.05; letter-spacing:-0.04em; color:var(--ink); margin:4px 0 20px; }
+  .container h2 { font-family:var(--display); font-size:25px; font-weight:600; letter-spacing:-0.025em; color:var(--ink); margin:42px 0 16px; padding-top:24px; border-top:1px solid var(--line); line-height:1.15; }
+  .container h3 { font-family:var(--display); font-size:20px; font-weight:600; letter-spacing:-0.02em; color:var(--ink); margin:28px 0 11px; line-height:1.2; }
+  .container h4 { font-size:16px; font-weight:700; color:var(--ink-2); margin:20px 0 8px; }
+  .container blockquote { margin:20px 0; padding:18px 22px; background:var(--accent-soft); border-left:3px solid var(--accent); border-radius:0 var(--r-sm) var(--r-sm) 0; color:var(--ink-2); }
+  .container blockquote p:last-child { margin-bottom:0; }
+  .container pre { background:var(--deep); color:#E8EAF0; padding:18px; border-radius:var(--r-sm); overflow-x:auto; margin:0 0 18px; font-size:13px; }
+  .container pre code { background:none; padding:0; color:inherit; }
+  .container a { color:var(--accent-ink); text-underline-offset:3px; }
+
+  /* === TABLES === */
+  .table-wrap { overflow-x:auto; margin:12px 0 18px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; font-weight:600; color:var(--faint); padding:0 12px 10px 0; border-bottom:1px solid var(--ink); font-size:10.5px; text-transform:uppercase; letter-spacing:0.07em; }
+  td { padding:11px 12px 11px 0; color:var(--ink-2); border-bottom:1px solid var(--line); vertical-align:top; line-height:1.5; }
+  tr:last-child td { border-bottom:none; } td strong { color:var(--ink); font-weight:600; } td code { font-size:13px; }
+
+  /* === GLASS CARDS (compartilham o tratamento frosted + hover-lift) === */
+  .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+  .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map,
+  .note, .callout, .opportunity, .danger {
+    background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%);
+    border:1px solid var(--glass-line); box-shadow:var(--shadow-sm);
+  }
+  .brand-card, .concept-card, .tier-card, .timeline-day, .primary-text-box, .faq, .hook-row, .headline-card {
+    transition:transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s ease; }
+  .brand-card:hover, .concept-card:hover, .tier-card:hover, .timeline-day:hover, .faq:hover, .hook-row:hover, .headline-card:hover {
+    transform:translateY(-3px); box-shadow:var(--shadow-lift); }
+
+  /* === QUOTE / VOC === */
+  .quote { margin:14px 0; padding:20px 24px; border-radius:var(--r-sm); font-size:15.5px; color:var(--ink); line-height:1.55; font-family:var(--mono); border-left:3px solid var(--accent); }
+  .quote-source { display:block; margin-top:14px; font-size:11px; color:var(--faint); font-family:var(--sans); letter-spacing:0.08em; text-transform:uppercase; font-weight:600; }
+  .script-block { border-radius:var(--r-sm); padding:22px 26px; margin:16px 0; font-family:var(--mono); font-size:13.5px; color:var(--ink-2); line-height:1.62; white-space:pre-wrap; word-break:break-word; }
+
+  /* === NOTE / CALLOUT / OPPORTUNITY / DANGER (cards glass + overline-label + glow leve) === */
+  .note, .callout, .opportunity, .danger { font-size:15.5px; line-height:1.6; padding:20px 24px; border-radius:var(--r); margin:18px 0; position:relative; }
+  /* RÓTULO = só o PRIMEIRO <strong> (filho direto) do card. Qualquer <strong> seguinte é ênfase inline no corpo — NUNCA vira rótulo (evita quebrar a frase no meio). */
+  .note > strong:first-of-type, .callout > strong:first-of-type, .opportunity > strong:first-of-type, .danger > strong:first-of-type { display:block; font-family:var(--sans); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
+  .note strong, .callout strong, .opportunity strong, .danger strong { font-weight:600; }
+  .note { color:var(--muted); } .note > strong:first-of-type { color:var(--faint); }
+  .callout { color:var(--ink); background:linear-gradient(180deg,rgba(255,241,232,.9),rgba(255,241,232,.6)); border-color:#FAD9C4; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 12px 32px rgba(255,106,26,.12); }
+  .callout > strong:first-of-type { color:var(--accent-deep); }
+  .opportunity { color:#0C2A20; background:linear-gradient(180deg,rgba(233,248,241,.85),rgba(233,248,241,.6)); border-color:#CFEEE1; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 10px 30px rgba(14,159,110,.10); }
+  .opportunity > strong:first-of-type { color:#0B7A53; }
+  .danger { color:#3A1714; background:linear-gradient(180deg,rgba(251,234,232,.9),rgba(251,234,232,.6)); border-color:#F2D2CC; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 12px 32px rgba(192,57,43,.10); }
+  .danger > strong:first-of-type { color:var(--red); }
+
+  /* === PILLS / BADGES (liquid glass) === */
+  .pill { display:inline-block; font-size:11px; font-weight:600; padding:5px 12px; border-radius:9px; letter-spacing:0.01em; text-transform:uppercase; margin-right:5px;
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.5); }
+  .pill-saturated, .pill-bof, .pill-pending { background:rgba(229,72,77,.12); color:#C9343A; border-color:rgba(229,72,77,.2); }
+  .pill-common, .pill-mof { background:rgba(183,121,31,.13); color:#92600F; border-color:rgba(183,121,31,.22); }
+  .pill-rare, .pill-win, .pill-ok { background:rgba(14,159,110,.13); color:#0B7A53; border-color:rgba(14,159,110,.22); }
+  .pill-absent, .pill-tof { background:rgba(255,106,26,.12); color:var(--accent-ink); border-color:rgba(255,106,26,.24); }
+
+  .voc-words { margin:16px 0 4px; line-height:2.4; }
+  .voc-words span { display:inline-block; background:var(--glass); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border:1px solid var(--glass-line); color:var(--muted); padding:7px 14px; border-radius:11px; margin:3px 7px 3px 0; font-size:13px; font-family:var(--mono); }
+
+  .score { display:inline-block; background:var(--ink); color:#FFF; font-size:11px; font-weight:600; padding:3px 10px; border-radius:8px; }
+  .score-high { background:var(--green); } .score-mid { background:var(--amber); } .score-low { background:var(--red); }
+
+  /* === WINNER (dark glass + glow halo) === */
+  .winner { position:relative; background:linear-gradient(160deg,rgba(20,25,35,.97),rgba(12,15,20,.97)); color:#D7D9E3; border-radius:22px; padding:40px 42px; margin:28px 0; border:1px solid rgba(255,255,255,.08); box-shadow:0 30px 80px rgba(12,15,20,.30); overflow:hidden; }
+  .winner::after { content:""; position:absolute; top:-40%; right:-10%; width:60%; height:120%; z-index:0; background:radial-gradient(circle,rgba(255,106,26,.42),transparent 62%); filter:blur(40px); pointer-events:none; }
+  .winner > * { position:relative; z-index:1; }
+  .winner strong { color:#FFF; font-weight:600; }
+  .winner p { color:#9EA3B2; font-size:17px; line-height:1.62; margin-bottom:8px; }
+  .winner .winner-label { font-size:11px; text-transform:uppercase; letter-spacing:0.13em; color:#FFB37A; margin-bottom:18px; font-weight:600; }
+  .winner .winner-name { font-family:var(--display); font-size:32px; font-weight:700; color:#FFF; margin-bottom:18px; letter-spacing:-0.035em; line-height:1.04; text-shadow:0 2px 30px rgba(255,106,26,.32); }
+
+  /* === KPI — STATS GIGANTES num painel glass com divisores + glow === */
+  .kpi-grid { display:flex; flex-wrap:wrap; gap:0; margin:24px 0; padding:26px 28px; border-radius:var(--r);
+    background:var(--glass); -webkit-backdrop-filter:blur(22px) saturate(155%); backdrop-filter:blur(22px) saturate(155%);
+    border:1px solid var(--glass-line); box-shadow:var(--shadow); }
+  .kpi-card { flex:1 1 0; min-width:140px; padding:0 32px; display:flex; flex-direction:column; }
+  .kpi-card:first-child { padding-left:0; } .kpi-card:last-child { padding-right:0; }
+  .kpi-card + .kpi-card { border-left:1px solid var(--line); }
+  .big-num { order:1; font-family:var(--display); font-size:clamp(28px,3.8vw,40px); font-weight:700; letter-spacing:-0.05em; line-height:0.98; color:var(--ink); font-variant-numeric:tabular-nums; margin-bottom:8px; text-shadow:0 2px 24px rgba(255,106,26,.16); }
+  .big-num-label { order:2; font-size:13px; color:var(--muted); letter-spacing:-0.005em; font-weight:500; line-height:1.35; }
+
+  /* === outras cards (radius/padding) === */
+  .brand-card, .concept-card { border-radius:var(--r); padding:30px 32px; margin-bottom:24px; }
+  .tier-card { border-radius:var(--r); padding:26px 28px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .tier-card.popular { border:1.5px solid var(--accent); position:relative; box-shadow:0 1px 2px rgba(12,15,20,.04), 0 14px 40px rgba(255,106,26,.16); }
+  .tier-card.popular::before { content:"POPULAR"; position:absolute; top:-10px; left:24px; background:var(--accent); color:#FFF; font-size:10px; font-weight:600; letter-spacing:0.07em; padding:4px 12px; border-radius:8px; box-shadow:0 4px 14px rgba(255,106,26,.38); }
+  .timeline-day { border-radius:var(--r); padding:26px 28px; margin-bottom:16px; }
+  .timeline-day-label { display:inline-block; font-size:10.5px; color:#FFF; background:var(--ink); padding:4px 13px; border-radius:8px; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:16px; }
+  .timeline { margin:18px 0; }
+  .timeline-row { display:flex; gap:20px; padding:15px 0; border-bottom:1px solid var(--line-2); }
+  .timeline-time { flex-shrink:0; width:94px; font-family:var(--mono); font-size:11.5px; color:var(--faint); padding-top:3px; }
+  .timeline-label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.1em; font-weight:600; color:var(--ink); }
+  .timeline-content { flex:1; } .timeline-content p { margin-bottom:6px; font-size:15px; }
+
+  .primary-text-box { border-radius:var(--r); padding:24px 28px; margin:14px 0; }
+  .pt-label { font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; margin-bottom:12px; }
+  .primary-text-box p { font-size:15px; color:var(--ink-2); line-height:1.64; }
+  .faq { margin:14px 0; padding:26px 30px; border-radius:var(--r); }
+  .faq-q { font-family:var(--display); font-size:19px; font-weight:600; margin-bottom:10px; letter-spacing:-0.025em; }
+  .faq-a { font-size:15.5px; color:var(--muted); line-height:1.62; }
+  .hook-row { border-radius:var(--r); padding:22px 26px; margin-bottom:12px; }
+  .hook-label { font-size:10.5px; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; margin-bottom:10px; }
+  .hook-text { font-size:18px; color:var(--ink); line-height:1.45; font-weight:600; margin-bottom:8px; letter-spacing:-0.02em; }
+  .hook-use { font-size:13px; color:var(--muted); line-height:1.5; }
+  .headline-card { border-radius:var(--r); padding:24px 28px; margin-bottom:14px; font-family:var(--display); font-size:21px; font-weight:600; line-height:1.32; letter-spacing:-0.03em; }
+  .headline-card.top { border:1.5px solid var(--accent); box-shadow:0 1px 2px rgba(12,15,20,.04), 0 14px 40px rgba(255,106,26,.14); }
+  .headline-card .hl-num { font-family:var(--sans); font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px; font-weight:600; }
+  .headline-card .hl-justify { font-family:var(--sans); font-size:14px; color:var(--muted); margin-top:12px; line-height:1.55; font-weight:400; letter-spacing:-0.008em; }
+  .ascii-map { border-radius:var(--r); padding:26px; font-family:var(--mono); font-size:12.5px; line-height:1.55; color:var(--ink-2); white-space:pre; overflow-x:auto; }
+
+  .check-row { display:flex; align-items:flex-start; gap:14px; margin-bottom:14px; }
+  .check-icon { flex-shrink:0; width:24px; height:24px; border-radius:8px; background:var(--green); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; margin-top:1px; box-shadow:0 4px 14px rgba(14,159,110,.3); }
+
+  /* === COMPATIBILIDADE COM O PADRÃO APROVADO DO PROJETO RETENÇÃO === */
+  .step { display:flex; gap:14px; padding:13px 0; border-bottom:1px solid var(--line-2); }
+  .step:last-child { border-bottom:none; }
+  .step-num { flex-shrink:0; width:26px; height:26px; border-radius:9px; background:var(--ink); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:600; margin-top:1px; }
+  .step-body { font-size:15px; color:var(--ink-2); line-height:1.55; }
+  .week { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; color:var(--accent-ink); margin:22px 0 6px; }
+  .gate { font-size:13.5px; color:var(--green); font-weight:600; margin:8px 0 2px; padding-left:40px; }
+  .check { list-style:none; margin-left:0; }
+  .check li { padding-left:30px; position:relative; }
+  .check li::before { content:""; position:absolute; left:2px; top:4px; width:15px; height:15px; border:1.5px solid var(--faint); border-radius:5px; }
+  .sig-block { padding:22px 24px; border-radius:var(--r); background:var(--glass); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); margin:0 0 22px; }
+  .kpi { display:flex; flex-wrap:wrap; gap:0; margin:24px 0; padding:26px 28px; border-radius:var(--r); background:var(--glass); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); }
+  .kpi > div { flex:1 1 0; min-width:120px; padding:0 24px; }
+  .kpi > div:first-child { padding-left:0; }
+  .kpi > div + div { border-left:1px solid var(--line); }
+  .big { font-family:var(--display); font-size:clamp(28px,3.8vw,40px); font-weight:700; letter-spacing:-0.05em; line-height:.98; margin-bottom:8px; }
+  .big-label { font-size:12.5px; color:var(--muted); line-height:1.35; font-weight:500; }
+
+  /* === COMPONENTES DE RELATÓRIOS HISTÓRICOS (retidos no sistema canônico) === */
+  .svgn { font-size:12px; color:var(--faint); background:var(--line-2); }
+  .pill-wait { background:rgba(183,121,31,.13); color:#92600F; border-color:rgba(183,121,31,.22); }
+  .brand-card .bc-tier { font-size:11px; color:var(--accent-ink); text-transform:uppercase; letter-spacing:.08em; font-weight:600; margin-bottom:16px; }
+  .tier-name { font-family:var(--display); font-size:18px; font-weight:600; letter-spacing:-.02em; color:var(--ink); margin-bottom:4px; }
+  .tier-role { font-size:13.5px; color:var(--muted); line-height:1.45; }
+  .tier-price { font-family:var(--display); font-size:26px; font-weight:700; color:var(--ink); letter-spacing:-.03em; flex-shrink:0; }
+  .swatch-row { display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 8px; }
+  .swatch { display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+  .swatch .chip { width:84px; height:60px; border-radius:12px; border:1px solid var(--line); box-shadow:var(--shadow-sm); }
+  .swatch .lab { font-size:11px; color:var(--muted); font-family:var(--mono); }
+  .big-num.zero, .big-num.go { color:var(--green); }
+  .step-n { flex-shrink:0; width:28px; height:28px; border-radius:9px; background:var(--ink); color:#FFF; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; margin-top:2px; }
+  .rot-card { background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%); border:1px solid var(--glass-line); box-shadow:var(--shadow-sm); border-radius:var(--r); padding:28px 30px; margin-bottom:26px; }
+  .rot-head { display:flex; flex-wrap:wrap; gap:10px; align-items:baseline; margin-bottom:6px; }
+  .rot-cod { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--accent-ink); }
+  .rot-tit { font-family:var(--display); font-size:22px; font-weight:600; letter-spacing:-.02em; }
+  .rot-meta { font-size:13px; color:var(--muted); margin-bottom:14px; }
+  .rot-obs { background:var(--amber-soft); border:1px solid #EFE0C0; border-radius:12px; padding:12px 16px; font-size:14px; color:#6B4E10; margin:10px 0; }
+  .rot-ia { background:var(--accent-soft); border:1px solid #FAD9C4; border-radius:12px; padding:12px 16px; font-size:14px; margin:10px 0; }
+  .rot-ia b { color:var(--accent-deep); }
+  .cena { display:grid; grid-template-columns:120px 1fr; gap:8px 16px; padding:10px 0; border-top:1px solid var(--line-2); font-size:14.5px; }
+  .cena .cn { font-weight:600; color:var(--ink); font-size:13px; }
+  .cena .cv { color:var(--faint); font-size:13px; }
+  .cena .cf { color:var(--ink-2); }
+  .rot-foot { margin-top:12px; font-size:13.5px; color:var(--muted); }
+  .rot-card .chip { display:inline-block; font-size:11px; font-weight:600; padding:4px 10px; border-radius:8px; background:rgba(255,106,26,.10); color:var(--accent-ink); margin-right:6px; text-transform:uppercase; letter-spacing:.04em; }
+  .group { margin-bottom:54px; }
+  .group-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.13em; color:var(--ink); margin-bottom:22px; display:flex; align-items:center; gap:14px; }
+  .group-label::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--line),transparent); }
+  .group-label .gn { color:var(--accent-ink); font-variant-numeric:tabular-nums; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:16px; }
+  .card { display:flex; flex-direction:column; gap:6px; background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%); border:1px solid var(--glass-line); border-radius:var(--r); padding:22px 24px; box-shadow:var(--shadow-sm); text-decoration:none; color:inherit; transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s ease; position:relative; overflow:hidden; }
+  .card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lift); }
+  .card .top { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px; }
+  .card .ph { font-size:11px; font-weight:600; color:var(--faint); letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+  .card h3 { font-family:var(--display); font-size:18px; font-weight:600; letter-spacing:-.02em; line-height:1.2; color:var(--ink); margin:0; }
+  .card p { font-size:13.5px; color:var(--muted); line-height:1.5; margin:2px 0 0; }
+  .card .go { margin-top:12px; font-size:13px; font-weight:600; color:var(--accent-ink); display:flex; align-items:center; gap:6px; }
+  .card .go svg { width:15px; height:15px; stroke:currentColor; stroke-width:2; fill:none; transition:transform .2s ease; }
+  .card:hover .go svg { transform:translateX(3px); }
+  .card.feature { background:linear-gradient(160deg,rgba(20,25,35,.97),rgba(12,15,20,.97)); border-color:rgba(255,255,255,.08); }
+  .card.feature h3, .card.feature .ph { color:#FFF; }
+  .card.feature p { color:#9EA3B2; }
+  .card.feature .go { color:#FFB37A; }
+  .card.feature::after { content:""; position:absolute; top:-30%; right:-10%; width:55%; height:130%; background:radial-gradient(circle,rgba(255,106,26,.35),transparent 62%); filter:blur(34px); pointer-events:none; }
+  .card.feature > * { position:relative; z-index:1; }
+  .card.soon { opacity:.62; pointer-events:none; }
+  .pill-html { background:rgba(183,121,31,.13); color:#92600F; border-color:rgba(183,121,31,.22); }
+  .pill-soon { background:rgba(255,106,26,.10); color:var(--accent-ink); border-color:rgba(255,106,26,.20); }
+  .legend { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin-top:14px; font-size:12px; color:var(--muted); }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:9px; height:9px; border-radius:50%; }
+
+  /* === ADVERTORIAL === */
+  .advertorial { background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(155%); backdrop-filter:blur(20px) saturate(155%); border:1px solid var(--glass-line); border-radius:26px; padding:clamp(32px,5vw,56px); margin:28px 0; box-shadow:var(--shadow); }
+  .adv-kicker { font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; font-weight:600; margin-bottom:22px; }
+  .adv-headline { font-family:var(--display); font-size:clamp(30px,3.8vw,44px); font-weight:700; line-height:1.04; letter-spacing:-0.04em; margin-bottom:18px; }
+  .adv-deck { font-size:20px; color:var(--muted); line-height:1.46; margin-bottom:16px; font-weight:400; letter-spacing:-0.015em; }
+  .adv-byline { font-size:11px; color:var(--faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:38px; font-weight:600; }
+  .adv-section-label { font-size:11px; color:var(--faint); text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-top:42px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .advertorial p { font-size:17.5px; color:var(--ink-2); line-height:1.72; margin-bottom:18px; } .advertorial p strong { color:var(--ink); font-weight:600; }
+  .advertorial hr { margin:32px 0; border:none; border-top:1px solid var(--line); }
+  .adv-cta { display:inline-block; background:var(--ink); color:#FFF; padding:16px 32px; border-radius:12px; font-size:15px; font-weight:600; letter-spacing:-0.01em; text-decoration:none; margin:14px 0; box-shadow:0 10px 30px rgba(12,15,20,.25); }
+
+  /* === A11Y / TOUCH === */
+  a { -webkit-tap-highlight-color:transparent; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:4px; }
+
+  hr { border:none; border-top:1px solid var(--line); margin:72px 0; }
+  .footer { font-size:13px; color:var(--faint); text-align:center; margin-top:96px; padding-top:40px; border-top:1px solid var(--line); letter-spacing:0.02em; }
+
+  /* ═══════════ GROWAI MOBILE SYSTEM v1 ═══════════ */
+  html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  body, .container, .wrap, .container > *, .wrap > *, .section, .subsection, .timeline-content, .check-row > div { min-width:0; }
+  body { overflow-wrap:anywhere; }
+  img, video, canvas, iframe { max-width:100%; height:auto; }
+  svg { max-width:100%; }
+  p, li, td, th, blockquote, a, .card, .phase, .note, .callout, .opportunity, .danger { overflow-wrap:anywhere; }
+  .table-wrap { max-width:100%; -webkit-overflow-scrolling:touch; overscroll-behavior-inline:contain; scrollbar-width:thin; }
+
+  /* === ANIMAÇÃO (progressive enhancement: visível sem JS) === */
+  .js .reveal { opacity:0; transform:translateY(20px); transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+  .js .reveal.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .js .reveal{opacity:1;transform:none;transition:none} *{scroll-behavior:auto} .brand-card,.faq,.hook-row,.headline-card,.tier-card,.timeline-day,.concept-card{transition:none} }
+
+  /* fallback: navegador sem backdrop-filter → fundo sólido (nunca película translúcida) */
+  @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+    .meta-bar > div, .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+    .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map, .note,
+    .kpi-grid, .voc-words span, .rot-card, .card, .advertorial {
+      background:linear-gradient(180deg,#FFFFFF,#FBFCFE);
+    }
+    .callout     { background:linear-gradient(180deg,#FFF3E9,#FFF7F0); }
+    .opportunity { background:linear-gradient(180deg,#EAF7F1,#F1FAF6); }
+    .danger      { background:linear-gradient(180deg,#FBECEA,#FCF2F0); }
+  }
+
+  /* touch/coarse em QUALQUER largura (iPad incluso): sem hover-lift nem sticky-hover */
+  @media (hover:none), (pointer:coarse) {
+    .brand-card:hover, .concept-card:hover, .tier-card:hover, .timeline-day:hover,
+    .faq:hover, .hook-row:hover, .headline-card:hover, .card:hover { transform:none; box-shadow:var(--shadow-sm); }
+    .toc li:hover { padding-left:4px; background:transparent; }
+    .toc li:hover a { color:var(--ink); }
+  }
+
+  /* ═══ ≤860px: SEM backdrop-filter (imune ao glitch/jank do blur no Safari iOS, cobre iPad portrait) + fundo sólido fosco ═══ */
+  @media (max-width:860px) {
+    .meta-bar > div, .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+    .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map, .note, .callout, .opportunity,
+    .danger, .kpi-grid, .pill, .voc-words span, .rot-card, .card, .advertorial {
+      -webkit-backdrop-filter:none !important; backdrop-filter:none !important;
+    }
+    /* glass → sólido fosco (nunca filme translúcido sobre o glow do fundo) */
+    .meta-bar > div, .quote, .script-block, .brand-card, .concept-card, .tier-card, .timeline-day,
+    .primary-text-box, .faq, .hook-row, .headline-card, .ascii-map, .note,
+    .kpi-grid, .voc-words span, .rot-card, .card, .advertorial, .sig-block, .kpi {
+      background:linear-gradient(180deg,#FFFFFF,#FBFCFE);
+    }
+    /* cards tintados → versão opaca (mesma família de cor GrowAI) */
+    .callout     { background:linear-gradient(180deg,#FFF3E9,#FFF7F0); }
+    .opportunity { background:linear-gradient(180deg,#EAF7F1,#F1FAF6); }
+    .danger      { background:linear-gradient(180deg,#FBECEA,#FCF2F0); }
+    /* cards dark continuam dark (winner já é ~.97 de alpha; feature idem) */
+    .card.feature { background:linear-gradient(160deg,rgba(20,25,35,.98),rgba(12,15,20,.98)); }
+  }
+
+  @media (max-width:640px) {
+    body { display:block; padding:24px max(14px,env(safe-area-inset-right)) 72px max(14px,env(safe-area-inset-left)); font-size:15.5px; }
+    .container, .wrap { width:100%; max-width:none; }
+    .logo-wrap { gap:10px; margin-bottom:24px; }
+    .logo-mark { width:34px; height:34px; }
+    .logo-word { font-size:19px; }
+    .page-title, .container > h1:not(.page-title) { font-size:clamp(28px,9vw,36px); line-height:1.08; letter-spacing:-0.035em; text-wrap:balance; }
+    .page-subtitle { max-width:none; margin-bottom:28px; font-size:16px; line-height:1.52; }
+    .meta-bar { grid-template-columns:1fr; margin-bottom:42px; }
+    .meta-bar > div { padding:14px 16px; font-size:14.5px; }
+    .toc { margin-bottom:46px; }
+    .toc li { align-items:flex-start; gap:12px; padding:14px 2px; font-size:16px; }
+    .toc li:hover { padding-left:2px; }
+    .section { margin-bottom:46px; }
+    .section-label, .group-label { flex-wrap:wrap; align-items:flex-start; gap:8px 10px; margin-bottom:17px; font-size:11px; letter-spacing:.09em; line-height:1.4; }
+    .section-label::after, .group-label::after { display:none; }
+    .subsection { margin-bottom:32px; }
+    .subsection-title { font-size:23px; }
+    .container h2 { margin-top:34px; padding-top:20px; font-size:22px; }
+    .container h3 { margin-top:24px; font-size:18px; }
+    p { font-size:15.5px; line-height:1.62; }
+    ul, ol { margin-left:18px; font-size:15px; line-height:1.6; }
+    code { word-break:normal; overflow-wrap:anywhere; }
+    .container blockquote { margin:16px 0; padding:16px 17px; }
+    .container pre, .ascii-map { padding:15px; font-size:11.5px; white-space:pre-wrap; word-break:break-word; }
+    .container pre code { display:block; max-width:100%; white-space:inherit; overflow-wrap:anywhere; word-break:break-word; }
+
+    .table-wrap { overflow:visible; margin:14px 0 22px; }
+    .mobile-table, .mobile-table tbody, .mobile-table tr, .mobile-table td { display:block; width:100%; }
+    .mobile-table { border-collapse:separate; font-size:14px; }
+    .mobile-table thead { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+    .mobile-table tbody { display:grid; gap:12px; }
+    .mobile-table tr { padding:8px 14px; border:1px solid var(--glass-line); border-radius:14px; background:linear-gradient(180deg,#FFFFFF,#FBFCFE); box-shadow:var(--shadow-sm); }
+    .mobile-table td { display:grid; grid-template-columns:minmax(86px,.36fr) minmax(0,.64fr); gap:12px; padding:10px 0; border-bottom:1px solid var(--line); font-size:14px; line-height:1.48; }
+    .mobile-table td::before { content:attr(data-label); color:var(--faint); font-size:9.5px; font-weight:600; line-height:1.35; letter-spacing:.07em; text-transform:uppercase; }
+    .mobile-table td:last-child { border-bottom:0; }
+    .mobile-table .pill { margin:0; white-space:normal; }
+    .mobile-table-key-value td { display:block; padding:5px 0 10px; }
+    .mobile-table-key-value td::before { display:none; }
+    .mobile-table-key-value td:first-child { padding:10px 0 3px; border-bottom:0; color:var(--faint); font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+
+    .note, .callout, .opportunity, .danger, .sig-block, .primary-text-box, .faq, .hook-row, .headline-card { padding:18px; border-radius:15px; }
+    .quote, .script-block { padding:17px 18px; font-size:13px; }
+    .brand-card, .concept-card, .timeline-day, .rot-card { padding:20px 18px; }
+    .winner { padding:26px 20px; border-radius:18px; }
+    .winner .winner-name { font-size:26px; }
+    .winner p { font-size:15.5px; }
+    .kpi-grid { flex-direction:column; gap:0; padding:22px 20px; }
+    .kpi-card { padding:0; min-width:0; }
+    .kpi-card + .kpi-card { margin-top:20px; border-left:none; border-top:1px solid var(--line); padding-top:20px; }
+    .big-num, .big { font-size:32px; }
+    .timeline-row { flex-direction:column; gap:4px; }
+    .timeline-time { width:auto; }
+    .tier-card { flex-direction:column; align-items:flex-start; padding:22px 18px; }
+    .tier-price { font-size:23px; }
+    .kpi { flex-direction:column; gap:0; padding:22px 20px; }
+    .kpi > div { padding:0; min-width:0; }
+    .kpi > div + div { margin-top:18px; border-left:none; border-top:1px solid var(--line); padding-top:18px; }
+    .step { gap:10px; }
+    .gate { padding-left:36px; }
+    .cena { grid-template-columns:1fr; gap:4px; }
+    .grid { grid-template-columns:minmax(0,1fr); }
+    .card { padding:19px 18px; }
+    .card .top, .rot-head, .swatch-row { flex-wrap:wrap; }
+    .advertorial { padding:24px 18px; border-radius:18px; }
+    .adv-headline { font-size:28px; }
+    .adv-deck { font-size:17px; }
+    .advertorial p { font-size:16px; }
+    .adv-cta { display:block; width:100%; padding:14px 18px; text-align:center; }
+    hr { margin:48px 0; }
+    .footer { margin-top:58px; padding-top:26px; font-size:12px; }
+    .js .reveal { opacity:1; transform:none; transition:none; }
+    .brand-card:hover, .concept-card:hover, .tier-card:hover, .timeline-day:hover, .faq:hover,
+    .hook-row:hover, .headline-card:hover, .card:hover { transform:none; }
+  }
+
+  @media (max-width:380px) {
+    body { padding:20px 12px 64px; }
+    .page-title, .container > h1:not(.page-title) { font-size:28px; }
+    .mobile-table td { grid-template-columns:1fr; gap:4px; }
+    .note, .callout, .opportunity, .danger, .sig-block, .primary-text-box, .faq, .hook-row, .headline-card,
+    .brand-card, .concept-card, .timeline-day, .rot-card, .winner, .advertorial { padding-left:16px; padding-right:16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="logo-wrap reveal" data-brand="growai">
+  <svg class="logo-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="GrowAI">
+    <defs>
+      <linearGradient id="growaiG" x1="12%" y1="6%" x2="88%" y2="96%">
+        <stop offset="0%" stop-color="#FF9A3D"/>
+        <stop offset="52%" stop-color="#FF6A1A"/>
+        <stop offset="100%" stop-color="#E63C0A"/>
+      </linearGradient>
+    </defs>
+    <circle cx="100" cy="100" r="100" fill="url(#growaiG)"/>
+    <text x="100" y="135" text-anchor="middle" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="152" fill="#FFFFFF">g</text>
+  </svg>
+  <span class="logo-word">GrowAI</span>
+</div>
+
+  <h1 class="page-title reveal">LP da Isca &quot;Ferro Sem Sofrimento&quot; — copy, roteiro da VSL e decisão</h1>
+  <p class="page-subtitle reveal">Squeeze page com VSL (padrão Brunson) para o trilho gestante: por que esta isca venceu nos dados, a estrutura da página bloco a bloco, o roteiro de 6 minutos para a Ana gravar, a sequência de entrega no GHL e a régua do CFN.</p>
+  <div class="meta-bar reveal"><div><strong>Cliente</strong> Ana Costa</div><div><strong>Fase</strong> 06 · Copy + 07a · Design</div><div><strong>Data</strong> 04/09/2026</div><div><strong>Página</strong> lp-ferro-sem-sofrimento/index.html</div></div>
+  <div class="kpi-grid reveal"><div class="kpi"><div class="big-num">563.851</div><div class="big-num-label">views no vídeo do sulfato ferroso que origina a isca</div></div><div class="kpi"><div class="big-num">1.349</div><div class="big-num-label">compartilhamentos do mesmo vídeo</div></div><div class="kpi"><div class="big-num">6 min</div><div class="big-num-label">duração da VSL, com 3 erros e a ponte para a consulta</div></div><div class="kpi"><div class="big-num">4</div><div class="big-num-label">fotos do ensaio da Ana já na página</div></div></div>
+  <div class="section" id="s1">
+    <div class="section-label reveal"><span class="num">01</span>Por que esta isca, e não outra (a decisão pelos dados)</div>
+    <p class="reveal">A pergunta era: qual isca é a mais óbvia nos dados da Ana, privilegiando conversão? A resposta é a que junta <strong>demanda provada</strong>, <strong>dor com urgência</strong> e <strong>ponte direta para a consulta</strong>. Só uma cumpre as três.</p>
+<div class="table-wrap reveal"><table>
+<thead><tr><th>Critério</th><th>Ferro / suplementação</th><th>Enjoo (SOS)</th><th>Diagnóstico da Fase (quiz)</th><th>5 Dias da Mulher 45+</th></tr></thead>
+<tbody>
+<tr><td>Demanda provada com o conteúdo da própria Ana</td><td><strong>563.851 views, 17.786 curtidas, 881 comentários, 1.349 compartilhamentos</strong> num único vídeo (14/10/2025). Cinco dos dez vídeos mais vistos dela são de suplementação na gestação</td><td>Um vídeo sobre o trimestre do enjoo com 139 mil views</td><td>Formato novo, sem prova</td><td>Zero conteúdo sobre 45+ em 2026</td></tr>
+<tr><td>Dor na voz da cliente</td><td>Segunda categoria mais frequente na VOC, e a mais "acionável": "toda vez que tomo vomito", "fiquei dois dias sem tomar e comi bem", "vou parar"</td><td>Primeira em frequência, mas a gestante busca remédio e alívio, não plano; passa em 16 semanas</td><td>Não é dor, é ferramenta</td><td>Forte, mas a audiência não recebe conteúdo sobre isso</td></tr>
+<tr><td>Urgência real</td><td><strong>Alta:</strong> várias relatam abandonar o suplemento por conta própria, com medo de prejudicar o bebê</td><td>Alta, mas de curta duração</td><td>Baixa</td><td>Média</td></tr>
+<tr><td>Ponte para a oferta paga (Avaliação da Fase)</td><td><strong>Direta:</strong> a aula termina na pergunta "qual é a SUA dose?", que só se responde com exame e consulta</td><td>Indireta</td><td>Direta, mas depende de o quiz ser bom</td><td>Longa (precisa de 5 dias)</td></tr>
+<tr><td>Risco regulatório (CFN)</td><td>Baixo, se a aula for educativa e mandar de volta ao pré-natal</td><td>Baixo</td><td>Baixo</td><td>Baixo</td></tr>
+<tr><td>Esforço de produção da Ana</td><td>1 vídeo de 6 minutos (tema que ela já domina e já gravou) + 1 PDF</td><td>1 vídeo + 1 PDF</td><td>Quiz de 6 perguntas + 3 áudios</td><td>5 vídeos</td></tr>
+</tbody></table></div>
+    <div class="callout reveal"><strong>Decisão: Ferro Sem Sofrimento.</strong>É o único ativo em que a Ana já provou, com 563 mil views, que sabe prender a atenção da gestante certa. A dor tem urgência de verdade (gestante parando o ferro sozinha), o mercado ainda está em nível baixo de sofisticação (poucos falam disso direto para a consumidora, então uma promessa simples e específica basta), e a aula desemboca naturalmente no problema seguinte, que é exatamente o que a Avaliação da Fase resolve: "a dose certa para você, com o seu exame". O quiz Diagnóstico da Fase continua no funil, mas como segundo passo depois desta isca, não como porta de entrada.</div>
+    <div class="callout reveal"><strong>O que a análise de mercado sustenta:</strong>o mercado gestante encolhe em volume (queda de 5,8% nos nascimentos em 2024), mas as mães estão mais velhas e com mais renda. Na VOC, a barreira de preço aparece ("difícil é ser pobre e não ter condições de pagar uma médica assim"), e a resposta aparece também: "consulta online, não achei caro". A isca gratuita e a consulta de R$ 300 conversam com os dois lados dessa frase.</div>
+  </div>
+  <div class="section" id="s2">
+    <div class="section-label reveal"><span class="num">02</span>O padrão da página (o que veio do Brunson e o que foi adaptado)</div>
+    <p class="reveal">Estrutura da squeeze page clássica: headline de curiosidade, um vídeo, um botão, nada mais para clicar. Aqui ela recebe três adaptações, cada uma com motivo:</p>
+    <ol class="reveal"><li><strong>Opt-in em dois passos.</strong> O botão abre o formulário. O clique é um micro-compromisso antes de aparecer qualquer campo, e o formulário pede só nome e WhatsApp (o canal que toda brasileira abre). Menos campo, mais conversão; WhatsApp em vez de email porque a entrega e a sequência rodam no GHL por WhatsApp.</li><li><strong>Bloco de "reverse squeeze" abaixo da dobra.</strong> Quem não aperta o play precisa de motivo para pedir a aula. Por isso a página continua: o que você recebe (fascinations), você não está sozinha (identificação com a VOC), pra quem é e pra quem não é (qualificação), quem é a Ana (credibilidade), 3 dúvidas, e o pedido final. Cada bloco leva ao mesmo botão.</li><li><strong>Barra fixa no celular.</strong> Aparece só depois que o CTA do topo sai da tela e some quando o cadastro é feito. Nunca compete com o vídeo.</li></ol>
+    <p class="reveal"><strong>Estrutura da página, na ordem:</strong></p>
+<div class="table-wrap reveal"><table>
+<thead><tr><th>Bloco</th><th>Papel</th><th>Copy-chave</th></tr></thead>
+<tbody>
+<tr><td>Kicker</td><td>Enquadra o formato e o custo</td><td>"Aula gratuita para gestantes · 6 minutos"</td></tr>
+<tr><td>Headline</td><td>Curiosidade + identificação (nível problema-consciente)</td><td>"Por que o sulfato ferroso te faz passar mal (e o que muda quando a dose é a sua)"</td></tr>
+<tr><td>Lede</td><td>Reconhece a cena exata e promete as 3 coisas</td><td>"…assista à aula antes de parar por conta própria"</td></tr>
+<tr><td>VSL</td><td>Entrega valor e abre o loop do "próximo problema"</td><td>6 minutos (roteiro abaixo)</td></tr>
+<tr><td>CTA</td><td>Call to value, espelha a headline</td><td>"Quero a aula e o Guia do Ferro no WhatsApp"</td></tr>
+<tr><td>Micro-copy sob o botão</td><td>Mata objeções de spam</td><td>"Grátis. Chega em 1 minuto. Sem spam, sem grupo obrigatório."</td></tr>
+<tr><td>O que você recebe</td><td>Fascinations em 3 cartões</td><td>aula · guia · a pergunta pra levar ao pré-natal</td></tr>
+<tr><td>Você não está sozinha</td><td>Identificação com frases públicas de gestantes (sem nome, com aviso)</td><td>4 frases da VOC</td></tr>
+<tr><td>Pra quem é</td><td>Qualificação e desqualificação honesta</td><td>3 "sim" e 1 "não"</td></tr>
+<tr><td>Quem é a Ana</td><td>Prova e história curta</td><td>2,6 mi de views, 563 mil no vídeo do ferro, mãe de dois</td></tr>
+<tr><td>Dúvidas</td><td>3 perguntas, incluindo a de compliance</td><td>"Posso parar depois da aula?" &rarr; não</td></tr>
+<tr><td>CTA final</td><td>Repete o pedido com urgência honesta</td><td>"Assista antes de decidir parar por conta própria"</td></tr>
+<tr><td>Rodapé</td><td>Disclaimer educativo</td><td>não substitui pré-natal nem prescrição</td></tr>
+</tbody></table></div>
+  </div>
+  <div class="section" id="s3">
+    <div class="section-label reveal"><span class="num">03</span>Roteiro da VSL (6 minutos, para a Ana gravar)</div>
+    <div class="note reveal"><strong>Formato:</strong>16:9, luz natural, sem jaleco, um cenário só (o consultório em casa ou a cozinha). Fala direta para a câmera, sem slides. Cortes secos a cada 20 a 30 segundos. Legenda queimada obrigatória (a maioria assiste no mudo).</div>
+    <p class="reveal"><strong>Estrutura (Hook &rarr; Promessa &rarr; Desqualificação do que ela já tentou &rarr; Qualificação &rarr; Conteúdo em 3 passos &rarr; O próximo problema &rarr; CTA):</strong></p>
+    <div class="note reveal"><strong>[0:00 a 0:20] Gancho (o mesmo que fez 563 mil views, refinado)</strong></div>
+    <div class="note reveal">"Se você toma sulfato ferroso e vomita um líquido amarelo com gosto de ferro, fica enjoada o dia inteiro e o intestino travou, eu preciso te contar uma coisa que ninguém te explicou no pré-natal: na maioria das vezes o problema não é o ferro. É o jeito que ele está sendo tomado."</div>
+    <div class="note reveal"><strong>[0:20 a 0:45] Quem sou e a promessa</strong></div>
+    <div class="note reveal">"Eu sou a Ana, nutricionista de gestantes, mãe de dois, e nos próximos 6 minutos você vai entender três coisas: por que o ferro te faz passar mal, os 3 erros mais comuns que pioram isso, e a pergunta que você precisa levar pra sua próxima consulta. No final eu te mostro como pegar o Guia do Ferro Sem Sofrimento de graça."</div>
+    <div class="note reveal"><strong>[0:45 a 1:20] Desqualificação do que ela já tentou (e o aviso de segurança)</strong></div>
+    <div class="note reveal">"Antes, o aviso mais importante desse vídeo: não pare de tomar por conta própria. Eu leio isso todo dia: 'fiquei dois dias sem tomar e comi bem, dormi bem, será que posso parar?'. Eu entendo. Mas anemia na gestação tem consequência pra você e pro bebê. O que a gente vai fazer aqui é o contrário de parar: é fazer o ferro funcionar sem te derrubar."</div>
+    <div class="note reveal"><strong>[1:20 a 1:45] Qualificação</strong></div>
+    <div class="note reveal">"Esse vídeo é pra você se está em qualquer trimestre, toma ferro e passa mal, e saiu do pré-natal sem entender por que aquela dose. Se você está procurando dieta pra emagrecer na gestação, esse vídeo não é pra você."</div>
+    <div class="note reveal"><strong>[1:45 a 3:45] O conteúdo: os 3 erros (um por minuto, tom de explicação, não de bronca)</strong></div>
+    <ul class="reveal"><li><strong>Erro 1: o horário.</strong> "Ferro em jejum absorve mais, mas é o que mais dá enjoo. No guia eu te dou um mapa de horários pra você testar na sua semana, com o que funciona quando o enjoo é forte de manhã."</li><li><strong>Erro 2: a companhia.</strong> "Café, chá, leite e o próprio cálcio do café da manhã brigam com o ferro. E existe uma coisa simples que faz o oposto: ajuda a absorver. Está na página 2 do guia."</li><li><strong>Erro 3: a dose de todo mundo.</strong> "Aqui está o ponto. Muita gestante recebe a mesma dose que todas as outras, sem ninguém olhar o exame dela. Uma dose que sobra vira enjoo, intestino preso e nada de resultado. Uma dose que falta vira anemia. A dose certa é a sua. E ela só existe com o seu exame na mão."</li></ul>
+    <div class="note reveal"><strong>[3:45 a 4:45] O próximo problema (a ponte, sem vender)</strong></div>
+    <div class="note reveal">"E é aqui que a maioria trava. Você sai daqui sabendo o que perguntar, mas a resposta depende de dois exames e de olhar a sua rotina, o seu enjoo, o que você consegue comer. É isso que eu faço na consulta. Não vou falar de consulta agora. Vou te dar o guia, porque com ele você já melhora a sua semana e chega no pré-natal com as perguntas certas."</div>
+    <div class="note reveal"><strong>[4:45 a 5:30] Como pegar o guia + o que tem dentro</strong></div>
+    <div class="note reveal">"Embaixo desse vídeo tem um botão. Você coloca o seu nome e o seu WhatsApp e em um minuto chega a aula completa e o guia: o que comer junto e o que afasta, 7 refeições ricas em ferro que cabem numa rotina enjoada, o mapa de horários e a página pra levar ao pré-natal com os exames pra pedir."</div>
+    <div class="note reveal"><strong>[5:30 a 6:00] Fechamento</strong></div>
+    <div class="note reveal">"Nenhuma gestante é dose única. Você merece ser olhada como você. Clica no botão, pega o guia, e me conta no WhatsApp em que semana você está. Eu leio."</div>
+    <div class="note reveal"><strong>Legendas e cortes sugeridos:</strong>"não pare por conta própria" em destaque aos 0:50; "a dose certa é a sua" aos 3:30; seta para baixo aos 4:50.</div>
+  </div>
+  <div class="section" id="s4">
+    <div class="section-label reveal"><span class="num">04</span>A entrega e a sequência (GHL, 13-A)</div>
+<div class="table-wrap reveal"><table>
+<thead><tr><th>Momento</th><th>Mensagem (WhatsApp)</th><th>Objetivo</th></tr></thead>
+<tbody>
+<tr><td>D0, imediato</td><td>"Oi, [nome]. Aqui é a Ana. Sua aula está aqui: [link]. E o Guia do Ferro Sem Sofrimento: [PDF]. Me conta: em que semana você está?"</td><td>Entregar + abrir conversa (a resposta dela tagueia a fase)</td></tr>
+<tr><td>D0, +2h se não respondeu</td><td>Áudio de 30 segundos da Ana: "vi que você pegou o guia, começa pela página 2, é a que mais muda a semana"</td><td>Consumo do guia</td></tr>
+<tr><td>D1</td><td>"A dúvida que mais recebo depois dessa aula é: 'e se eu já estou com anemia?'. Vou te responder em 3 frases…" + convite ao grupo gratuito Bem Nutrida</td><td>Educar + convidar ao grupo (jornada M2)</td></tr>
+<tr><td>D3</td><td>História curta de uma gestante que chegou na consulta com o guia e as perguntas certas (sem antes e depois, sem números de peso)</td><td>Prova de processo</td></tr>
+<tr><td>D5</td><td>Convite ao Diagnóstico da Fase (quiz) "pra eu te mandar o que muda na sua fase"</td><td>Segundo passo do funil</td></tr>
+<tr><td>D7</td><td>"Esse mês eu abri 8 vagas de Avaliação da Fase. Se você quer a sua dose com o seu exame, é aqui: [link]. Se ainda não é a hora, fica no grupo que eu te acompanho por lá."</td><td>Oferta com escassez real</td></tr>
+</tbody></table></div>
+    <div class="note reveal"><strong>Tracking (07c):</strong>evento "Lead" só no envio do formulário, nunca no carregamento da página. Propriedades: isca = ferro, origem = FERRO/bio/TikTok/IG. Meta de leitura: cadastro &rarr; entrou no grupo &rarr; fez o quiz &rarr; agendou.</div>
+  </div>
+  <div class="section" id="s5">
+    <div class="section-label reveal"><span class="num">05</span>Compliance CFN (checado na copy)</div>
+    <ul class="reveal"><li>Nenhuma promessa de resultado, nenhum antes e depois, nenhum número de peso.</li><li>A aula orienta a <strong>não</strong> parar o suplemento e a voltar ao pré-natal com perguntas. Isso está na VSL, na FAQ e no rodapé.</li><li>Não há preço de consulta na página. A consulta só é mencionada como "o que eu faço", sem valor (regra vigente até 22/01/2027).</li><li>As frases de gestantes são públicas, reproduzidas sem nome e com o aviso de que não são pacientes da Ana. Não são depoimentos.</li><li>Material entregue é educativo (guia, refeições-exemplo, mapa de horários). Individualização acontece na consulta.</li></ul>
+  </div>
+  <div class="section" id="s6">
+    <div class="section-label reveal"><span class="num">06</span>Design (direção e sistema)</div>
+    <div class="callout reveal"><strong>Direção:</strong>"receituário reescrito": editorial e acolhedor, papel quente com textura fina, verde-floresta como cor de confiança clínica, terracota como cor de ação. Foge do rosa-bebê genérico de conteúdo materno e do azul de clínica.</div>
+<div class="table-wrap reveal"><table>
+<thead><tr><th>Elemento</th><th>Escolha</th><th>Por quê</th></tr></thead>
+<tbody>
+<tr><td>Display</td><td>Fraunces (serifa com itálico expressivo)</td><td>A itálica em "dose é a sua" é a âncora visual da página; lembra caligrafia de receita</td></tr>
+<tr><td>Corpo</td><td>Figtree</td><td>Humanista, legível em 17px no celular, sem cara de sistema</td></tr>
+<tr><td>Fundo</td><td>papel #F6EFE4 com grão sutil</td><td>Calor e proximidade; a página não parece anúncio</td></tr>
+<tr><td>Confiança</td><td>verde-floresta #1F4D3D</td><td>O bloco "você não está sozinha" é o único bloco escuro da página, e é onde a gestante se vê</td></tr>
+<tr><td>Ação</td><td>terracota #D6643C</td><td>Um único botão, uma única cor de ação, repetida na barra fixa</td></tr>
+<tr><td>Vídeo</td><td>moldura escura com brilho verde, botão de play terracota com halo</td><td>O play é o elemento mais visível acima da dobra</td></tr>
+</tbody></table></div>
+    <div class="callout reveal"><strong>Mobile:</strong>testado de 320 a 430 px. Grid empilha, KPIs viram uma coluna abaixo de 360 px, formulário e botão ocupam a largura toda, barra fixa respeita a área segura do iPhone. Sem rolagem horizontal.</div>
+    <div class="opportunity reveal"><strong>Diferenciação:</strong>a página evita o padrão genérico de landing page ao usar tipografia editorial com itálica funcional em vez de headline em negrito sem alma, e ao colocar a identificação (as frases das gestantes) num bloco escuro no meio da página em vez de depoimentos de estrela.</div>
+  </div>
+  <div class="section" id="s7">
+    <div class="section-label reveal"><span class="num">07</span>O que a Ana precisa entregar</div>
+    <ol class="reveal"><li>O vídeo de 6 minutos (roteiro acima), 16:9, com legenda.</li><li>Fotos: recebidas em 04/09 (ensaio de gestante, fev/2026, 30 imagens). Na página entraram 4: retrato com as mãos na barriga (bio), foto em família (polaroid "mãe de dois"), close-up (avatar do topo) e a foto na janela como poster provisório do vídeo. As demais ficam de reserva para criativos e para o guia em PDF.</li><li>O Guia do Ferro Sem Sofrimento em PDF (a GrowAI diagrama a partir do conteúdo dela: o que comer junto, o que afasta, 7 refeições, mapa de horários, a página do pré-natal).</li><li>Número oficial do WhatsApp (API) e o CRN para o selo.</li></ol>
+    <div class="opportunity reveal"><strong>Teste de nome antes de subir:</strong>enquete de story com 3 títulos: "Ferro Sem Sofrimento" · "Por que o ferro te faz passar mal" · "A dose certa é a sua". Decide pelo clique, não pela curtida.</div>
+    <p class="reveal" style="color:var(--muted);font-size:14px">Documento interno GrowAI. Copy pública em pt-BR. Frameworks: squeeze page e VSL (Brunson); lead magnet como ponte para o próximo problema (Hormozi); VOC pt-BR da pesquisa 02.</p>
+  </div>
+
+  <p class="footer">GrowAI © 2026 · Aura Engine · uso interno GrowAI · para aprovação</p>
+
+</div>
+
+<script data-growai-responsive="v1">
+(() => {
+  document.querySelectorAll('.table-wrap table').forEach((table) => {
+    const headers = Array.from(table.querySelectorAll('thead th')).map((cell, index) =>
+      cell.textContent.trim() || `Coluna ${index + 1}`
+    );
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    if (!headers.length) {
+      const isKeyValue = rows.length && rows.every((row) => row.querySelectorAll(':scope > td').length === 2);
+      if (isKeyValue) table.classList.add('mobile-table', 'mobile-table-key-value');
+      return;
+    }
+
+    table.classList.add('mobile-table');
+    rows.forEach((row) => {
+      let headerIndex = 0;
+      Array.from(row.children).forEach((cell) => {
+        if (!cell.matches('td,th')) return;
+        if (!cell.hasAttribute('data-label')) {
+          cell.setAttribute('data-label', headers[headerIndex] || 'Informação');
+        }
+        headerIndex += Number(cell.getAttribute('colspan') || 1);
+      });
+    });
+  });
+})();
+</script>
+
+<!-- ═══════════════ ANIMAÇÃO (reveal no scroll + count-up nos números) ═══════════════ -->
+<script>
+(() => {
+  // Guard: sem IntersectionObserver, NADA é escondido (a classe .js nunca entra) — página estática visível.
+  if (!('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+  if (reduce) { reveals.forEach(e=>e.classList.add('in')); }
+  else {
+    const io = new IntersectionObserver((es)=>{es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);
+      e.target.querySelectorAll && e.target.querySelectorAll('[data-count]').forEach(countUp); } })},{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    reveals.forEach(el=>io.observe(el));
+    // FAILSAFE: se o observer não disparar (quirk do Safari iOS / Quick Look / webview), revela tudo em ~2.6s — nenhum bloco fica invisível
+    setTimeout(()=>{ reveals.forEach(el=>{ if(!el.classList.contains('in')){ el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(countUp); } }); }, 2600);
+  }
+  function countUp(el){
+    if (reduce || el.dataset.done) return; el.dataset.done = '1'; // guarda: IO + failsafe podem chamar os dois
+    const target = parseFloat(el.getAttribute('data-count')); if (isNaN(target)) return;
+    const suffix = el.getAttribute('data-suffix')||''; const prefix = el.getAttribute('data-prefix')||'';
+    const dec = (String(target).split('.')[1]||'').length; const dur = 900; const t0 = performance.now();
+    function frame(t){ const p = Math.min(1,(t-t0)/dur); const e = 1-Math.pow(1-p,3);
+      el.textContent = prefix + (target*e).toFixed(dec) + suffix; if (p<1) requestAnimationFrame(frame); else el.textContent = prefix+target.toFixed(dec)+suffix; }
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>
